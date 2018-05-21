@@ -1,3 +1,7 @@
+param (
+    [Parameter(Mandatory=$false)][string]$contract=$(throw "Specify contract type: payg, ri1y, ri3y"),
+    [Parameter(Mandatory=$false)][string]$ssd=$(throw "Specify SSD: yes, no")
+    )
 Function Get-FileName($initialDirectory)
 {
     [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
@@ -49,7 +53,6 @@ $peakCPU= '100'
 $peakMem = '100'
 
 $currency = 'USD'
-$contract = 'ri1y' #options: payg, ri1y, ri3y
 $burstable = 'no'
 
 $os = 'windows'
@@ -58,7 +61,7 @@ Add-Content -Path $outputFile -Value '"VM Name","Region","Cores","Memory (GB)","
 
 foreach ($vm in $allVMs) {
 
-    #$vmName = $vm.Name
+    $vmName = $vm.Name
     $vmCores = $vm.CPUs
     $vmMem = $vm.Memory
     $vmDiskSize = $vm.Provisioned
