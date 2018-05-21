@@ -2,6 +2,7 @@ param (
     [Parameter(Mandatory=$false)][string]$contract=$(throw "Specify contract type: payg, ri1y, ri3y"),
     [Parameter(Mandatory=$false)][string]$ssd=$(throw "Specify SSD: yes, no")
     )
+
 Function Get-FileName($initialDirectory)
 {
     [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
@@ -46,7 +47,6 @@ $vmDiskSize = '128'
 $iops = '500'
 $throughput = '25'
 
-$ssd = 'yes'
 $nics = '1'
 $tempDiskSize = '10'
 $peakCPU= '100'
@@ -55,7 +55,7 @@ $peakMem = '100'
 $currency = 'USD'
 $burstable = 'no'
 
-$os = 'windows'
+$os = 'linux'
 
 Add-Content -Path $outputFile -Value '"VM Name","Region","Cores","Memory (GB)","SSD [Yes/No]","NICs","Max Disk Size (TB)","IOPS","Throughput (MB/s)","Min Temp Disk Size (GB)","Peak CPU Usage (%)","Peak Memory Usage (%)","Currency","Contract","Burstable","OS"'
 
