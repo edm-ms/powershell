@@ -3,18 +3,35 @@ Function Get-FileName($initialDirectory)
     [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
     
     $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
-    $OpenFileDialog.initialDirectory = $initialDirectory
-    $OpenFileDialog.filter = "CSV (*.csv)| *.csv"
+    $OpenFileDialog.Title = "Choose file to import"
+    $OpenFileDialog.InitialDirectory = $initialDirectory
+    $OpenFileDialog.Filter = "CSV (*.csv)| *.csv"
     $OpenFileDialog.ShowDialog() | Out-Null
-    $OpenFileDialog.filename
+    $OpenFileDialog.Filename
 }
+
+Function Save-FileName($initialDirectory)
+{
+    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
+   
+    $OpenFileDialog = New-Object System.Windows.Forms.FolderBrowserDialog
+    $OpenFileDialog.ShowDialog() | Out-Null
+    $OpenFileDialog.SelectedPath
+
+} 
+
+$fileName = 'vmchooser.csv'
 
 $inputFile = Get-FileName
 
-$allVMs = Import-Csv $inputFile
-$myOutFile = 'C:\Users\ermoor\Desktop\vmChooser.csv'
+$outputFile = Save-Filename
+$outputFile = $outputFile + "\" + $fileName
 
-If (Test-Path $myOutFile) {Remove-Item $myOutFile}
+$allVMs = Import-Csv $inputFile
+
+If (Test-Path $outputFile) {Remove-Item $outputFile}
+
+Start-Process microsoft-edge:https://azurevmchooser.kvaes.be/bulkuploader
 
 $vmName = 'unknown'
 $azureLocation = 'us-east'
@@ -37,13 +54,7 @@ $burstable = 'no'
 
 $os = 'windows'
 
-
-
-#$myOutFile = 
-
-# Bulk Uploader Tool: https://azurevmchooser.kvaes.be/bulkuploader
-
-Add-Content -Path $myOutFile -Value '"VM Name","Region","Cores","Memory (GB)","SSD [Yes/No]","NICs","Max Disk Size (TB)","IOPS","Throughput (MB/s)","Min Temp Disk Size (GB)","Peak CPU Usage (%)","Peak Memory Usage (%)","Currency","Contract","Burstable","OS"'
+Add-Content -Path $outputFile -Value '"VM Name","Region","Cores","Memory (GB)","SSD [Yes/No]","NICs","Max Disk Size (TB)","IOPS","Throughput (MB/s)","Min Temp Disk Size (GB)","Peak CPU Usage (%)","Peak Memory Usage (%)","Currency","Contract","Burstable","OS"'
 
 foreach ($vm in $allVMs) {
 
@@ -53,5 +64,5 @@ foreach ($vm in $allVMs) {
     $vmDiskSize = $vm.Provisioned
 
     $fileContent = $vmName + "," + $azureLocation + "," + $vmCores + "," + $vmMem + "," + $ssd + "," + $nics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $os
-    Add-Content -Path $myOutFile -Value $fileContent
+    Add-Content -Path $outputFile -Value $fileContent
 }
