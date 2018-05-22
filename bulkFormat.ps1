@@ -1,6 +1,11 @@
 param (
-    [Parameter(Mandatory=$false)][string]$contract=$(throw "Specify contract type: payg, ri1y, ri3y"),
-    [Parameter(Mandatory=$false)][string]$ssd=$(throw "Specify SSD: yes, no")
+    [Parameter(Position=0, Mandatory=$true, HelpMessage="Specify a contract type: payg, ri1y, or ri3y")]
+    [ValidateSet("payg","ri1y","ri3y")]
+    [string]$contract,
+
+    [Parameter(Position=1, Mandatory=$true, HelpMessage="Specify SSD: yes or no")]
+    [ValidateSet("yes","no")]
+    [string]$ssd
     )
 
 Function Get-FileName($initialDirectory)
