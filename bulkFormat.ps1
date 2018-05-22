@@ -43,8 +43,7 @@ If (Test-Path $outputFile) {Remove-Item $outputFile}
 
 Start-Process microsoft-edge:https://azurevmchooser.kvaes.be/bulkuploader
 
-$vmName = 'unknown'
-$azureLocation = 'us-east'
+$azureLocation = 'us-north-central'
 $iops = '500'
 $throughput = '25'
 $nics = '1'
@@ -53,7 +52,6 @@ $peakCPU= '100'
 $peakMem = '100'
 $currency = 'USD'
 $burstable = 'no'
-$os = 'linux'
 
 Add-Content -Path $outputFile -Value '"VM Name","Region","Cores","Memory (GB)","SSD [Yes/No]","NICs","Max Disk Size (TB)","IOPS","Throughput (MB/s)","Min Temp Disk Size (GB)","Peak CPU Usage (%)","Peak Memory Usage (%)","Currency","Contract","Burstable","OS"'
 
@@ -63,6 +61,7 @@ foreach ($vm in $allVMs) {
     $vmCores = $vm.CPUs
     $vmMem = $vm.Memory
     $vmDiskSize = $vm.Provisioned
+    $os = $vm.OS
 
     $fileContent = $vmName + "," + $azureLocation + "," + $vmCores + "," + $vmMem + "," + $ssd + "," + $nics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $os
     Add-Content -Path $outputFile -Value $fileContent
