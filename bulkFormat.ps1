@@ -5,7 +5,11 @@ param (
 
     [Parameter(Position=1, Mandatory=$true, HelpMessage="Specify SSD: yes or no")]
     [ValidateSet("yes","no")]
-    [string]$ssd
+    [string]$ssd,
+
+    [Parameter(Position=2, Mandatory=$false, HelpMessage="Specify location: us-north-central, us-east, etc.")]
+    [string]$azureLocation
+
     )
 
 Function Get-FileName($initialDirectory)
@@ -43,7 +47,8 @@ If (Test-Path $outputFile) {Remove-Item $outputFile}
 
 Start-Process microsoft-edge:https://azurevmchooser.kvaes.be/bulkuploader
 
-$azureLocation = 'us-north-central'
+if ($azureLocation -eq $null) {$azureLocation = 'us-north-central'}
+
 $iops = '500'
 $throughput = '25'
 $nics = '1'
