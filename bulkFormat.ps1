@@ -40,21 +40,14 @@ Start-Process microsoft-edge:https://azurevmchooser.kvaes.be/bulkuploader
 
 $vmName = 'unknown'
 $azureLocation = 'us-east'
-$vmCores = '1'
-$vmMem = '2'
-$vmDiskSize = '128'
-
 $iops = '500'
 $throughput = '25'
-
 $nics = '1'
 $tempDiskSize = '10'
 $peakCPU= '100'
 $peakMem = '100'
-
 $currency = 'USD'
 $burstable = 'no'
-
 $os = 'linux'
 
 Add-Content -Path $outputFile -Value '"VM Name","Region","Cores","Memory (GB)","SSD [Yes/No]","NICs","Max Disk Size (TB)","IOPS","Throughput (MB/s)","Min Temp Disk Size (GB)","Peak CPU Usage (%)","Peak Memory Usage (%)","Currency","Contract","Burstable","OS"'
