@@ -7,7 +7,7 @@ param (
     [ValidateSet("yes","no")]
     [string]$ssd,
 
-    [Parameter(Position=2, Mandatory=$false, HelpMessage="Specify location: us-north-central, us-east, etc.")]
+    [Parameter(Position=2, Mandatory=$false, HelpMessage="Specify default location: us-north-central, us-east, etc.")]
     [string]$azureLocation
 
     )
@@ -67,7 +67,10 @@ foreach ($vm in $allVMs) {
     $vmMem = $vm.Memory
     $vmDiskSize = $vm.Provisioned
     $os = $vm.OS
+    $region = $vm.Region
 
-    $fileContent = $vmName + "," + $azureLocation + "," + $vmCores + "," + $vmMem + "," + $ssd + "," + $nics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $os
+    If ($vm.Region -eq "") { $region = $azureLocation }
+
+    $fileContent = $vmName + "," + $region + "," + $vmCores + "," + $vmMem + "," + $ssd + "," + $nics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $os
     Add-Content -Path $outputFile -Value $fileContent
 }
