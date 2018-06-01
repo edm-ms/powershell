@@ -1,8 +1,4 @@
 param (
-    [Parameter(Position=0, Mandatory=$true, HelpMessage="Specify a contract type: payg, ri1y, or ri3y")]
-    [ValidateSet("payg","ri1y","ri3y")]
-    [string]$contract,
-
     [Parameter(Position=1, Mandatory=$true, HelpMessage="Specify SSD: yes or no")]
     [ValidateSet("yes","no")]
     [string]$ssd,
@@ -35,19 +31,14 @@ Function Save-FileName($initialDirectory)
 } 
 
 $fileName = 'vmchooser.csv'
+$contractTypes = 'payg', 'ri1y', 'ri3y'
 
 $inputFile = Get-FileName
-
-$outputFile = Save-Filename
-$outputFile = $outputFile + "\" + $fileName
+$outputPath = Save-Filename
 
 $allVMs = Import-Csv $inputFile
 
-If (Test-Path $outputFile) {Remove-Item $outputFile}
-
 Start-Process microsoft-edge:https://azurevmchooser.kvaes.be/bulkuploader
-
-if ($azureLocation -eq $null) {$azureLocation = 'us-north-central'}
 
 $iops = '500'
 $throughput = '25'
@@ -57,20 +48,33 @@ $peakCPU= '100'
 $peakMem = '100'
 $currency = 'USD'
 $burstable = 'no'
+$azureLocation = 'us-north-central'
+$i = 0
 
-Add-Content -Path $outputFile -Value '"VM Name","Region","Cores","Memory (GB)","SSD [Yes/No]","NICs","Max Disk Size (TB)","IOPS","Throughput (MB/s)","Min Temp Disk Size (GB)","Peak CPU Usage (%)","Peak Memory Usage (%)","Currency","Contract","Burstable","OS"'
+foreach ($actype in $contractTypes) {
 
-foreach ($vm in $allVMs) {
+    $contract = $contractTypes[$i]
+    $outputFile = $outputPath + "\" + $contractTypes[$i] + "-" + $fileName
 
-    $vmName = $vm.Name
-    $vmCores = $vm.CPUs
-    $vmMem = $vm.Memory
-    $vmDiskSize = $vm.Provisioned
-    $os = $vm.OS
-    $region = $vm.Region
+    If (Test-Path $outputFile) {Remove-Item $outputFile}
+    Add-Content -Path $outputFile -Value '"VM Name","Region","Cores","Memory (GB)","SSD [Yes/No]","NICs","Max Disk Size (TB)","IOPS","Throughput (MB/s)","Min Temp Disk Size (GB)","Peak CPU Usage (%)","Peak Memory Usage (%)","Currency","Contract","Burstable","OS"'
 
-    If ($vm.Region -eq "") { $region = $azureLocation }
+    $i ++
 
-    $fileContent = $vmName + "," + $region + "," + $vmCores + "," + $vmMem + "," + $ssd + "," + $nics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $os
-    Add-Content -Path $outputFile -Value $fileContent
+    foreach ($vm in $allVMs) {
+
+        $vmName = $vm.Name
+        $vmCores = $vm.CPUs
+        $vmMem = $vm.Memory
+        $vmDiskSize = $vm.Storage
+        $vmSSD = $vm.SSD
+        $os = $vm.OS
+        $region = $vm.Region
+
+        If ($vm.Region -eq '') { $region = $azureLocation }
+        If ($vm.SSD -eq '') { $vmSSD = $ssd }
+
+        $fileContent = $vmName + "," + $region + "," + $vmCores + "," + $vmMem + "," + $vmSSD + "," + $nics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $os
+        Add-Content -Path $outputFile -Value $fileContent
+    }
 }
