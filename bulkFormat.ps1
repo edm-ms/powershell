@@ -73,7 +73,7 @@ $currency = 'USD'
 $burstable = 'no'
 $azureLocation = 'brazil-south'
 $vmHANA = "no"
-$vmSAP2 - "no"
+$vmSAP2 = "no"
 $vmSAP3 = "no"
 $vmSISLA = "no"
 $vmOverride = "yes"
