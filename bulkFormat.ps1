@@ -1,5 +1,5 @@
 param (
-    [Parameter(Position=1, Mandatory=$true, HelpMessage="Specify SSD: yes or no")]
+    [Parameter(Position=1, Mandatory=$false, HelpMessage="Specify SSD: yes or no")]
     [ValidateSet("yes","no", "all")]
     [string]$ssd,
 
@@ -65,19 +65,18 @@ $colOSDisk = "OSDISK"
 
 $iops = '500'
 $throughput = '25'
-$nics = '1'
 $tempDiskSize = '10'
 $peakCPU= '100'
 $peakMem = '100'
 $currency = 'USD'
-$burstable = 'no'
+$burstable = 'No'
 $azureLocation = 'brazil-south'
-$vmHANA = "no"
-$vmSAP2 = "no"
-$vmSAP3 = "no"
-$vmSISLA = "no"
-$vmOverride = "yes"
-$osDisk = ""
+$vmHANA = 'No'
+$vmSAP2 = ''
+$vmSAP3 = ''
+$vmSISLA = 'No'
+$vmOverride = 'No'
+$osDisk = ''
 $i = 0
 
 foreach ($actype in $contractTypes) {
@@ -87,9 +86,7 @@ foreach ($actype in $contractTypes) {
 
     If (Test-Path $outputFile) {Remove-Item $outputFile}
 
-    Add-Content -Path $outputFile -Value "$colName, $colregion, $colCores, $colMem, $colSSD, $colNics, $colDiskSize, $colIops, $colThroughput, $colMinTemp, $colPeakCPU, $colPeakMem, $colCurrency, $colContract, $colBurst, $colHANA, $colSAP2, $colSAP3, $colSisla, $colOverrideDisk, $colOS, $colOSDisk"
-
-    #Add-Content -Path $outputFile -Value '"VM Name","Region","Cores","Memory (GB)","SSD","NICs","Max Disk Size (TB)","IOPS","Throughput (MB/s)","Min Temp Disk Size (GB)","Peak CPU Usage (%)","Peak Memory Usage (%)","Currency","Contract","Burstable","SAPHANA","SAPS2T","SAPS3T","SISLA","OVERRIDEDISKTYPE","OS","OSDISK"'
+    Add-Content -Path $outputFile -Value "$colName,$colregion,$colCores,$colMem,$colSSD,$colNics,$colDiskSize,$colIops,$colThroughput,$colMinTemp,$colPeakCPU,$colPeakMem,$colCurrency,$colContract,$colBurst,$colHANA,$colSAP2,$colSAP3,$colSisla,$colOverrideDisk,$colOS,$colOSDisk"
 
     $i ++
 
@@ -97,13 +94,17 @@ foreach ($actype in $contractTypes) {
 
         $vmName = $vm.Name
         $vmCores = $vm.CPUs
-        $vmMem = $vm.Memory
-        $vmNics = $vm.NICs
-        $vmDiskSize = $vm.Storage
+
+        $vmMem = $vm.Memory / 1000
+        $vmMem = [math]::Round($vmMem) 
+
+        $vmDiskSize = $vm.Storage / 1000
+        $vmDiskSize = [math]::Round($vmDiskSize, 3)
+        
+        $vmNics = $vm.NICs        
         $vmSSD = $vm.SSD
         $os = $vm.OS
         $region = $vm.Region
-
 
         If ($vm.Region -eq '') { $region = $azureLocation }
         If ($vm.SSD -eq '') { $vmSSD = $ssd }
@@ -111,8 +112,9 @@ foreach ($actype in $contractTypes) {
         If ($vm.OS -like "*linux*") {$vm.OS = "linux"}
         If ($vm.OS -like "*cent*") {$vm.OS = "linux"}
         If ($vm.OS -like "*windows*") {$vm.OS = "windows"}
+        If ($vm.OS -like "*other*") {$vm.OS = "windows"}
 
-        $fileContent = $vmName + "," + $region + "," + $vmCores + "," + $vmMem + "," + $vmSSD + "," + $vmNics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $vmHANA + "," + $vmSAP2 + "," + $vmSAP3 + "," + $vmSISLA + "," + $vmOverride + "," + $os
+        $fileContent = $vmName + "," + $region + "," + $vmCores + "," + $vmMem + "," + $vmSSD + "," + $vmNics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $vmHANA + "," + $vmSAP2 + "," + $vmSAP3 + "," + $vmSISLA + "," + $vmOverride + "," + $os + "," + $osDisk
         Add-Content -Path $outputFile -Value $fileContent
     }
 }
