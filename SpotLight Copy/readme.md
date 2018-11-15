@@ -4,4 +4,4 @@ This PowerShell script will copy Windows SpotLight login images to a folder in y
 
 Schedule it from Task Scheduler with the following syntax: PowerShell -File "locationOfThisScript"
 
-<img src="https://github.com/edm-ms/powershell/blob/master/SpotLight%20Copy/Images/tasksched.png" style="width: 50%; height: 50%"/>
+![Task Scheduler](https://github.com/edm-ms/powershell/blob/master/SpotLight%20Copy/Images/tasksched.png)
