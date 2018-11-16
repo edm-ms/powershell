@@ -11,7 +11,7 @@ If ((Test-Path $imageDestination) -eq $false) { New-Item -ItemType Directory -Pa
 
 # Find all large images in the source directory
 
-$bigImages = Get-ChildItem $imageSource | Where-Object {$_.Length -gt 200000}
+$bigFiles = Get-ChildItem $imageSource | Where-Object {$_.Length -gt 150kb}
 
 # Create ImageFile COM Object
 
@@ -19,7 +19,7 @@ $image  = New-Object -ComObject Wia.ImageFile
 
 # Loop through all imaged in the list matching ones that are 1920 wide and copy them to the destination
 
-ForEach ($imageItem in $bigImages) {
+ForEach ($imageItem in $bigFiles) {
     $image.loadfile($imageItem.FullName)
     if ($image.Width -eq 1920) { 
         $imageName = $imageItem.Name + ".jpg"
