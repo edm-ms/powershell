@@ -22,7 +22,7 @@ $image  = New-Object -ComObject Wia.ImageFile
 ForEach ($imageItem in $bigFiles) {
     $image.loadfile($imageItem.FullName)
     if ($image.Width -eq 1920) { 
-        $imageName = (get-date $imageItem.CreationTime -Format yyyy-mm-yy-hhmm) + ".jpg"
+        $imageName = (get-date $imageItem.CreationTime -Format yyyy-mm-yy-hhmmss) + ".jpg"
         copy-item $imageItem.FullName -Destination ($imageDestination + $imageName)
     }
 }
