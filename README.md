@@ -159,7 +159,7 @@ The following commands need to be run on the Raspberry Pi whilst connected over 
     - **```sudo nano /etc/hostname```**
     - **```sudo nano /etc/hosts```**
         - i.e. **raspberrypi-<**abbreviation**>-01**, See table below for names.
-    - Click Please add your devices to the following file[https://github.com/Azure/IoT-Pi-Day/tree/master/Setting%20up%20the%20Raspberry%20Pi/MSFT%20Networking]. This info is a MUST to conect to Microsoft WiFi, see **Find the MAC Address** below.
+    - Please add your devices to the following file[Master City MAC List](https://github.com/Azure/IoT-Pi-Day/tree/master/Setting%20up%20the%20Raspberry%20Pi/MSFT%20Networking). This info is a MUST to conect to Microsoft WiFi, see **Find the MAC Address** below.
     - Press **ctrl-X**, press **Y**, press **Enter** to save file.
 
         City Name | Device Name | MAC Address
