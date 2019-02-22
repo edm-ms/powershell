@@ -1,4 +1,4 @@
-$prefix = "192.168.1."
+$prefix = "192.168.10."
 $addressCount = 254
 $i = 1
 do { 
