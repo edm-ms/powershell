@@ -38,7 +38,7 @@ $outputPath = Save-Filename
 
 $allVMs = Import-Csv $inputFile
 
-Start-Process microsoft-edge:https://azurevmchooser.kvaes.be/bulkuploader
+Start-Process https://www.vmchooser.com/bulkuploader
 
 $colName = "VM Name"
 $colregion = "Region"
@@ -70,7 +70,7 @@ $peakCPU= '100'
 $peakMem = '100'
 $currency = 'USD'
 $burstable = 'No'
-$azureLocation = 'brazil-south'
+$azureLocation = 'us-east'
 $vmHANA = 'No'
 $vmSAP2 = ''
 $vmSAP3 = ''
@@ -107,6 +107,7 @@ foreach ($actype in $contractTypes) {
         $region = $vm.Region
 
         If ($vm.Region -eq '') { $region = $azureLocation }
+        If ($vm.Region -eq $null) { $region = $azureLocation }
         If ($vm.SSD -eq '') { $vmSSD = $ssd }
         If ($vm.NICs -eq '') { $vmNics = 1}
         If ($vm.OS -like "*linux*") {$vm.OS = "linux"}
@@ -116,5 +117,6 @@ foreach ($actype in $contractTypes) {
 
         $fileContent = $vmName + "," + $region + "," + $vmCores + "," + $vmMem + "," + $vmSSD + "," + $vmNics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $vmHANA + "," + $vmSAP2 + "," + $vmSAP3 + "," + $vmSISLA + "," + $vmOverride + "," + $os + "," + $osDisk
         Add-Content -Path $outputFile -Value $fileContent
+
     }
 }
