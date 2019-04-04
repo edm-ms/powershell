@@ -39,6 +39,9 @@ do {
     $startRead = $vmList[$i].ArrayPos
     $endRead = $vmList[$i+1].ArrayPos - 1
 
+    # // If this is the last part of the array to read get the endpoint as the count of items in the array
+    if ($i -eq $vmlist.length-1) { $endRead = $inputFile.Length }
+
     $driveLoop = 0
     $totalSpace = 0
 
@@ -61,16 +64,30 @@ do {
     $vmMem = $vmMem.Line.Split('<')[8]
     $vmMem = $vmMem.Substring(3,$vmMem.length-3)
     $vmMem = $vmMem.Split(' ')[0]
+    $vmMem = [int]$vmMem
 
     $driveCount = $inputFile[$startRead..$endRead] | Select-String $driveCountSearchString
     $driveCount = $driveCount.Line.Split('<')[8]
     $driveCount = $driveCount.Substring(3,$driveCount.length-3)
 
     $driveSpace = $inputFile[$startRead..$endRead] | Select-String $driveSpaceSearchString
+
+
     
     do { # // Loop for the number of drives and add them together
 
-        $driveSpaceLoop = $driveSpace[$driveLoop].Line.Split('<')[8]
+        if ($driveSpace -eq $null) {
+
+            $driveSpace =@('<tr class="r0"><td class="V">&nbsp;V&nbsp;</td><td><em>Maximum capacity</em></td><td>0 GB</td></tr>')
+            $driveSpaceLoop = $driveSpace[$driveLoop].Split('<')[8]
+        }
+
+        else {
+        
+            $driveSpaceLoop = $driveSpace[$driveLoop].Line.Split('<')[8]
+
+        }
+
         $driveSpaceLoop = $driveSpaceLoop.Substring(3,$driveSpaceLoop.length-3)
         $driveSpaceLoop = $driveSpaceLoop.Split(' ')[0]
         $driveSpaceLoop = [int]$driveSpaceLoop
@@ -84,13 +101,13 @@ do {
     while ($driveLoop+1 -lt $driveCount)
 
     $dcObj = New-Object System.Object
-    $dcObj | Add-Member -NotePropertyName 'VM Name' -NotePropertyValue $vmList[$i].VMName
+    $dcObj | Add-Member -NotePropertyName 'Name' -NotePropertyValue $vmList[$i].VMName
     $dcObj | Add-Member -NotePropertyName 'VM State' -NotePropertyValue $vmState
-    $dcObj | Add-Member -NotePropertyName 'vCPU Count' -NotePropertyValue $cpuCount
-    $dcObj | Add-Member -NotePropertyName 'Memory MB' -NotePropertyValue $vmMem
+    $dcObj | Add-Member -NotePropertyName 'CPUs' -NotePropertyValue $cpuCount
+    $dcObj | Add-Member -NotePropertyName 'Memory' -NotePropertyValue $vmMem
     $dcObj | Add-Member -NotePropertyName 'Drive Count' -NotePropertyValue $driveCount
-    $dcObj | Add-Member -NotePropertyName 'Total Space GB' -NotePropertyValue $totalSpace
-    $dcObj | Add-Member -NotePropertyName 'Guest OS' -NotePropertyValue $guestOS
+    $dcObj | Add-Member -NotePropertyName 'Storage' -NotePropertyValue $totalSpace
+    $dcObj | Add-Member -NotePropertyName 'OS' -NotePropertyValue $guestOS
 
     $dcReport += $dcObj
 
@@ -99,4 +116,4 @@ do {
 
 } 
 
-while ($i -lt $vmList.length-1)
+while ($i -lt $vmList.length)
