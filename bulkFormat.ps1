@@ -114,6 +114,7 @@ foreach ($actype in $contractTypes) {
         If ($vm.OS -like "*cent*") {$vm.OS = "linux"}
         If ($vm.OS -like "*windows*") {$vm.OS = "windows"}
         If ($vm.OS -like "*other*") {$vm.OS = "windows"}
+        If ($vm.OS -eq "") {$vm.OS = "linux"}
 
         $fileContent = $vmName + "," + $region + "," + $vmCores + "," + $vmMem + "," + $vmSSD + "," + $vmNics + "," + $vmDiskSize + "," + $iops + "," + $throughput + "," + $tempDiskSize + "," + $peakCPU+ "," + $peakMem + "," + $currency + "," + $contract + "," + $burstable + "," + $vmHANA + "," + $vmSAP2 + "," + $vmSAP3 + "," + $vmSISLA + "," + $vmOverride + "," + $os + "," + $osDisk
         Add-Content -Path $outputFile -Value $fileContent

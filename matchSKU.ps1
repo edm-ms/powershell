@@ -14,20 +14,41 @@ $mml = 0 # // Memory Match Loop
 $mn = 0 # // Memory Normalization Loop
 $ll = 0 # Logic Loop
 
-$cpuMemory = @()
+$driveSKUs = @(1, 32, 64, 128, 256, 512, 1024, 2048, 4096)
+
+$asrMaxDriveSize = 4096
+$osExclusions = @('', '*Router*', '*BSD*', '*Windows XP*', '*Windows 7*', '*Windows 8*', '*Windows 10*')
+
+$vmToMatch = @()
 $memMatch = @()
 $matchedSKUs = @()
+$vmExclusions = @()
     
-$cpuMemory += ($dcReport | select vCPU, Memory)
+# // Build Exclusions
+
+foreach ($vm in $dcReport) {
+
+     If ($vm.Drives.Values -gt $asrMaxDriveSize) { $vmExclusions += $vm.Name  }
+     
+}
+     
+foreach ($vm in $osExclusions) {
+
+    $vmExclusions += ($dcReport | where OS -Like $vm | select Name).Name
+
+}
+
+$vmToMatch += ($dcReport | where Name -NotIn $vmExclusions | select vCPU, Memory)
+$vmToMove += ($dcReport | where Name -NotIn $vmExclusions)
 
 # // Normalize memory values, matching Azure SKU, and rounding up
 
-foreach ($vm in $cpuMemory) {
+foreach ($vm in $vmToMatch) {
 
     foreach ($item in $allMemTypes) {
 
         If ($vm.Memory -eq $item.MemoryInMB) { break } # // stop if RAM is a match
-        If (($vm.Memory - $item.MemoryInMB) -lt 0) { $cpuMemory[$mn].Memory = $item.MemoryInMB ;break }
+        If (($vm.Memory - $item.MemoryInMB) -lt 0) { $vmToMatch[$mn].Memory = $item.MemoryInMB ;break } # // round up to nearest available RAM SKU
 
     }
 
@@ -37,23 +58,23 @@ foreach ($vm in $cpuMemory) {
 
 # // Logic for adjusting input values
 
-foreach ($item in $cpuMemory) {
+foreach ($item in $vmToMatch) {
         
-    if ( $item.vCPU -ge 6 -and $item.Memory -ge 16384) { $cpuMemory[$ll].vCPU = 8  } # // Adjust CPU/Mem balance
-    if ( $item.vCPU -ge 6 -and $item.Memory -lt 16384) { $cpuMemory[$ll].vCPU = 4  } # // Adjust CPU/Mem balance
-    if ( $item.Memory -le 4096 -and $item.vCPU -ge 4) { $cpuMemory[$ll].vCPU = 2  } # // Adjust CPU/Mem balance
+    if ( $item.vCPU -ge 6 -and $item.Memory -ge 16384) { $vmToMatch[$ll].vCPU = 8  } # // Adjust CPU/Mem balance
+    if ( $item.vCPU -ge 6 -and $item.Memory -lt 16384) { $vmToMatch[$ll].vCPU = 4  } # // Adjust CPU/Mem balance
+    if ( $item.Memory -le 4096 -and $item.vCPU -ge 4) { $vmToMatch[$ll].vCPU = 2  } # // Adjust CPU/Mem balance
 
     $ll ++
 
     }
 
-$cpuCountType = $cpuMemory | Group-Object vCPU | Select Name
+$cpuCountType = $vmToMatch | Group-Object vCPU | Select Name 
 
 foreach ($cpuMatch in $cpuCountType) {
 
     $cpuMatch = $cpuMatch.Name
 
-    $memCountType = $cpuMemory | where vCPU -eq $cpuMatch | Group-Object Memory
+    $memCountType = $vmToMatch | where vCPU -eq $cpuMatch | Group-Object Memory
 
     foreach ($memMatch in $memCountType) {
         
@@ -95,6 +116,17 @@ foreach ($cpuMatch in $cpuCountType) {
 }
 
 $matchedSKUs = $matchedSKUs | Sort-Object qty -Descending
-
+$unMatched = $matchedSKUs | where Match -eq "No" 
 $matchedSKUs | where SKU -ne 'N/A' | Select-Object Qty, SKU
-write-host "Unmatched VMs:" ($matchedSKUs | where Match -eq "No" | measure qty -sum).sum
+$unMatched
+
+
+$i = 1
+
+foreach ($drive in $driveSKUs) {
+
+    if ($driveSKUs[$i] -eq $null) { break }
+    write-host  $driveSKUs[$i] "|" ($vmToMove.drives | % { ($_.Values -le $driveSKUs[$i]) -gt $drive } | measure | select Count).Count
+    $i ++
+
+}
