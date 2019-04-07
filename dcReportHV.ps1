@@ -77,21 +77,14 @@ do {
     $totalSpace = 0
     $totalUsedSpace = 0
 
-        $dcObj = New-Object System.Object
-        $dcObj | Add-Member -NotePropertyName 'VM Name' -NotePropertyValue $vmList[$i].VMName
-
     $vmState = $inputFile[$startRead..$endRead] | Select-String $vmStateSearchString
     $vmState = $vmState.Line.Split('<')[8]
     $vmState = $vmState.Substring(3,$vmState.length-3)
     
-        $dcObj | Add-Member -NotePropertyName 'VM State' -NotePropertyValue $vmState
-
     $cpuCount = $inputFile[$startRead..$endRead] | Select-String $cpuSearchString
     $cpuCount = $cpuCount.Line.Split('<')[8]
     $cpuCount = $cpuCount.Substring(3,$cpuCount.length-3)
     
-        $dcObj | Add-Member -NotePropertyName 'vCPU' -NotePropertyValue $cpuCount
-
     $vmMem = $inputFile[$startRead..$endRead] | Select-String $dMemSearchString
 
     if ($vmMem -eq $null) { $vmMem = $inputFile[$startRead..$endRead] | Select-String $sMemSearchString }
@@ -100,80 +93,88 @@ do {
     $vmMem = $vmMem.Substring(3,$vmMem.length-3)
     $vmMem = $vmMem.Split(' ')[0]
     $vmMem = [int]$vmMem
-    
-        $dcObj | Add-Member -NotePropertyName 'Memory' -NotePropertyValue $vmMem
 
     $nicCount = $inputFile[$startRead..$endRead] | Select-String $nicSearchString
     $nicCount = $nicCount.Line.Split('<')[8]
     $nicCount = $nicCount.Substring(3,$nicCount.length-3)
-
-        $dcObj | Add-Member -NotePropertyName 'NICs' -NotePropertyValue $nicCount
     
     $driveCount = $inputFile[$startRead..$endRead] | Select-String $driveCountSearchString
     $driveCount = $driveCount.Line.Split('<')[8]
     $driveCount = $driveCount.Substring(3,$driveCount.length-3)
     $driveCount = [int]$driveCount
 
-        $dcObj | Add-Member -NotePropertyName 'Drive Count' -NotePropertyValue $driveCount
-
     $driveSpaceTotal = $inputFile[$startRead..$endRead] | Select-String $driveSpaceSearchString
     $driveSpaceUsed = $inputFile[$startRead..$endRead] | Select-String $driveSpaceUsedSearchString
+
+    $drivesHash = @{}
+    $largestDrive = 0
 
     do { # // Loop for the number of drives, create drive object(s), and add then total drives
 
         if ($driveSpaceTotal -eq $null) {
 
             $driveSpaceTotal =@('<tr class="r0"><td class="V">&nbsp;V&nbsp;</td><td><em>Maximum capacity</em></td><td>0 GB</td></tr>')
-            $driveSpaceTotalLoop = $driveSpaceTotal[$driveLoop].Split('<')[8]
+            $spaceTotal = $driveSpaceTotal[$driveLoop].Split('<')[8]
 
         }
 
         else {
         
-            $driveSpaceTotalLoop = $driveSpaceTotal[$driveLoop].Line.Split('<')[8]
+            $spaceTotal = $driveSpaceTotal[$driveLoop].Line.Split('<')[8]
 
         }
 
         if ($driveSpaceUsed -eq $null) {
 
             $driveSpaceUsed =@('<tr class="r0"><td class="V">&nbsp;V&nbsp;</td><td><em>Used capacity (for dynamic VHD)</em></td><td>0 GB</td></tr>')
-            $driveSpaceUsedLoop = $driveSpaceUsed[$driveLoop].Split('<')[8]
+            $usedTotal = $driveSpaceUsed[$driveLoop].Split('<')[8]
 
         }
 
         else {
         
-            $driveSpaceUsedLoop = $driveSpaceUsed[$driveLoop].Line.Split('<')[8]
+            $usedTotal = $driveSpaceUsed[$driveLoop].Line.Split('<')[8]
 
         }  
 
-        $driveSpaceTotalLoop = $driveSpaceTotalLoop.Substring(3,$driveSpaceTotalLoop.length-3)
-        $driveSpaceTotalLoop = $driveSpaceTotalLoop.Split(' ')[0]
-        $driveSpaceTotalLoop = [int]$driveSpaceTotalLoop
+        $spaceTotal = $spaceTotal.Substring(3,$spaceTotal.length-3)
+        $spaceTotal = $spaceTotal.Split(' ')[0]
+        $spaceTotal = [int]$spaceTotal
 
-        $driveSpaceUsedLoop = $driveSpaceUsedLoop.Substring(3,$driveSpaceUsedLoop.length-3)
-        $driveSpaceUsedLoop = $driveSpaceUsedLoop.Split(' ')[0]
-        $driveSpaceUsedLoop = [int]$driveSpaceUsedLoop
+        $usedTotal = $usedTotal.Substring(3,$usedTotal.length-3)
+        $usedTotal = $usedTotal.Split(' ')[0]
+        $usedTotal = [int]$usedTotal
 
-        $dcObj | Add-Member -NotePropertyName "Drive $driveLoop" -NotePropertyValue $driveSpaceUsedLoop
+        $driveName = 'Drive' + $driveLoop
+        $drivesHash.add($driveName, $spaceTotal)
+
+        if ( $spaceTotal -gt $largestDrive ) { $largestDrive = $spaceTotal }
 
         $driveLoop ++
 
-        $totalSpace = $totalSpace + $driveSpaceTotalLoop
-        $totalUsedSpace = $totalUsedSpace + $driveSpaceUsedLoop
+        $totalSpace = $totalSpace + $spaceTotal
+        $totalUsedSpace = $totalUsedSpace + $usedTotal
 
     }
 
     while ($driveCount -gt $driveLoop)
     
-        $dcObj | Add-Member -NotePropertyName 'Total Assigned Space' -NotePropertyValue $totalSpace
-        $dcObj | Add-Member -NotePropertyName 'Total Used Space' -NotePropertyValue $totalUsedSpace
-    
     $guestOS = $inputFile[$startRead..$endRead] | Select-String $guestOSString
     $guestOS = $guestOS.Line.Split('<')[8]
     $guestOS = $guestOS.Substring(3,$guestOS.length-3)
-    
-        $dcObj | Add-Member -NotePropertyName 'OS' -NotePropertyValue $guestOS
+
+    $dcObj = New-Object System.Object
+    $dcObj | Add-Member -NotePropertyName 'Name' -NotePropertyValue $vmList[$i].VMName
+    $dcObj | Add-Member -NotePropertyName 'State' -NotePropertyValue $vmState
+    $dcObj | Add-Member -NotePropertyName 'vCPU' -NotePropertyValue $cpuCount
+    $dcObj | Add-Member -NotePropertyName 'Memory' -NotePropertyValue $vmMem
+    $dcObj | Add-Member -NotePropertyName 'NICs' -NotePropertyValue $nicCount
+    $dcObj | Add-Member -NotePropertyName 'DriveCount' -NotePropertyValue $driveCount
+    $dcObj | Add-Member -NotePropertyName "Drives" -NotePropertyValue $drivesHash
+    $dcObj | Add-Member -NotePropertyName "LargestDrive" -NotePropertyValue $largestDrive
+    $dcObj | Add-Member -NotePropertyName 'TotalSpace' -NotePropertyValue $totalSpace
+    $dcObj | Add-Member -NotePropertyName 'UsedSpace' -NotePropertyValue $totalUsedSpace  
+    $dcObj | Add-Member -NotePropertyName 'OS' -NotePropertyValue $guestOS
 
     $dcReport += $dcObj
 
@@ -184,7 +185,9 @@ do {
 while ($i -lt $vmList.length)
 
 Write-Host "Total VMs:" $dcReport.length
-Write-Host "Total Space:" ($dcReport | Measure-Object 'Total Assigned Space' -sum).sum
-Write-Host "OS Drive Space:" ($dcReport | Measure-Object 'Drive 0' -sum).sum
+Write-Host "Total Space:" ($dcReport | Measure-Object 'TotalSpace' -sum).sum
 Write-Host "Average vCPU:" ($dcReport | Measure-Object 'vCPU' -Average).Average
 Write-Host "Average RAM:" ($dcReport | Measure-Object 'Memory' -Average).Average
+
+# // $dcreport.drives | % { $_.Values -lt 128 }
+# // $dcreport.drives | % { $allDrives += $_.Values }
