@@ -20,37 +20,64 @@ $asrMaxDriveSize = 4096
 $osExclusions = @('', '*Router*', '*BSD*', '*Windows XP*', '*Windows 7*', '*Windows 8*', '*Windows 10*')
 
 $vmToMatch = @()
+$vmToMove = @()
 $memMatch = @()
 $matchedSKUs = @()
 $vmExclusions = @()
+$matchedDrives = @()
     
 # // Build Exclusions
 
 foreach ($vm in $dcReport) {
 
-     If ($vm.Drives.Values -gt $asrMaxDriveSize) { $vmExclusions += $vm.Name  }
+     If ($vm.Drives.Values -gt $asrMaxDriveSize) { 
+         
+        #$vmExclusions += $vm.Name  
+        
+        $vmExcludeObj = New-Object System.Object
+        $vmExcludeObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
+        $vmExcludeObj | Add-Member -NotePropertyName Reason -NotePropertyValue 'Drive(s) > 4TB not supported by ASR'
+        $vmExcludeObj | Add-Member -NotePropertyName Value -NotePropertyValue $vm.Drives.Values
+
+        $vmExclusions += $vmExcludeObj
+    
+    }
      
 }
      
-foreach ($vm in $osExclusions) {
+foreach ($vm in $dcReport) {
 
-    $vmExclusions += ($dcReport | where OS -Like $vm | select Name).Name
+    # $vmExclusions += ($dcReport | where OS -Like $vm | select Name).Name
 
-}
+    foreach ($os in $osExclusions) {
 
-$vmToMatch += ($dcReport | where Name -NotIn $vmExclusions | select vCPU, Memory)
-$vmToMove += ($dcReport | where Name -NotIn $vmExclusions)
+        If (($vm | where OS -Like $os | select Name).Name -ne $null) {
+
+            $vmExcludeObj = New-Object System.Object
+            $vmExcludeObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
+            $vmExcludeObj | Add-Member -NotePropertyName Reason -NotePropertyValue 'Unsupported operating system'
+            $vmExcludeObj | Add-Member -NotePropertyName Value -NotePropertyValue $vm.OS
+    
+            $vmExclusions += $vmExcludeObj
+
+            }
+        }
+
+    }
+
+$vmToMatch += ($dcReport | where Name -NotIn $vmExclusions.Name | select vCPU, Memory)
+$vmToMove += ($dcReport | where Name -NotIn $vmExclusions.Name)
 
 # // Normalize memory values, matching Azure SKU, and rounding up
 
 foreach ($vm in $vmToMatch) {
 
-    foreach ($item in $allMemTypes) {
+    foreach ($azureVM in $allMemTypes) {
 
-        If ($vm.Memory -eq $item.MemoryInMB) { break } # // stop if RAM is a match
-        If (($vm.Memory - $item.MemoryInMB) -lt 0) { $vmToMatch[$mn].Memory = $item.MemoryInMB ;break } # // round up to nearest available RAM SKU
+        If ($vm.Memory -eq $azureVM.MemoryInMB) { break } # // stop if RAM is a match
+        If (($vm.Memory - $azureVM.MemoryInMB) -lt 0) { $vmToMatch[$mn].Memory = $azureVM.MemoryInMB ; break } # // round up to nearest available RAM SKU
 
-    }
+        }
 
     $mn ++
 
@@ -58,11 +85,11 @@ foreach ($vm in $vmToMatch) {
 
 # // Logic for adjusting input values
 
-foreach ($item in $vmToMatch) {
+foreach ($azureVM in $vmToMatch) {
         
-    if ( $item.vCPU -ge 6 -and $item.Memory -ge 16384) { $vmToMatch[$ll].vCPU = 8  } # // Adjust CPU/Mem balance
-    if ( $item.vCPU -ge 6 -and $item.Memory -lt 16384) { $vmToMatch[$ll].vCPU = 4  } # // Adjust CPU/Mem balance
-    if ( $item.Memory -le 4096 -and $item.vCPU -ge 4) { $vmToMatch[$ll].vCPU = 2  } # // Adjust CPU/Mem balance
+    if ( $azureVM.vCPU -ge 6 -and $azureVM.Memory -ge 16384) { $vmToMatch[$ll].vCPU = 8  } # // Adjust CPU/Mem balance
+    if ( $azureVM.vCPU -ge 6 -and $azureVM.Memory -lt 16384) { $vmToMatch[$ll].vCPU = 4  } # // Adjust CPU/Mem balance
+    if ( $azureVM.Memory -le 4096 -and $azureVM.vCPU -ge 4) { $vmToMatch[$ll].vCPU = 2  } # // Adjust CPU/Mem balance
 
     $ll ++
 
@@ -92,7 +119,7 @@ foreach ($cpuMatch in $cpuCountType) {
             $vmMatchObj | Add-Member -NotePropertyName Memory -NotePropertyValue $memMatch.Name
             $vmMatchObj | Add-Member -NotePropertyName SKU -NotePropertyValue 'N/A'
 
-        }
+            }
 
         else { 
                 
@@ -103,7 +130,7 @@ foreach ($cpuMatch in $cpuCountType) {
             $vmMatchObj | Add-Member -NotePropertyName Memory -NotePropertyValue $memMatch.Name
             $vmMatchObj | Add-Member -NotePropertyName SKU -NotePropertyValue $possibleMatch.Name
             
-        }
+            }
  
         $matchedSKUs += $vmMatchObj
         $mml ++
@@ -115,10 +142,6 @@ foreach ($cpuMatch in $cpuCountType) {
 
 }
 
-$matchedSKUs = $matchedSKUs | Sort-Object qty -Descending
-$unMatched = $matchedSKUs | where Match -eq "No" 
-$matchedSKUs | where SKU -ne 'N/A' | Select-Object Qty, SKU
-$unMatched
 
 
 $i = 1
@@ -126,7 +149,20 @@ $i = 1
 foreach ($drive in $driveSKUs) {
 
     if ($driveSKUs[$i] -eq $null) { break }
-    write-host  $driveSKUs[$i] "|" ($vmToMove.drives | % { ($_.Values -le $driveSKUs[$i]) -gt $drive } | measure | select Count).Count
+
+    $driveQTY = ($vmToMove.drives | % { ($_.Values -le $driveSKUs[$i]) -gt $drive } | measure | select Count).Count
+
+    $driveObj = New-Object System.Object
+    $driveObj | Add-Member -NotePropertyName Size -NotePropertyValue $driveSKUs[$i]
+    $driveObj | Add-Member -NotePropertyName Qty -NotePropertyValue $driveQTY
+
+    $matchedDrives += $driveObj
+
     $i ++
 
 }
+
+$matchedSKUs = $matchedSKUs | Sort-Object qty -Descending
+
+$matchedSKUs | Select-Object Qty, SKU
+
