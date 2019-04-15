@@ -1,3 +1,37 @@
+# // ####################################################
+# // ####################################################
+# // Start Azure Automation Login Using Service Principal
+# // ####################################################
+# // ####################################################
+$connectionName = "AzureRunAsConnection"
+try
+{
+    # Get the connection "AzureRunAsConnection "
+    $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName         
+
+    "Logging in to Azure..."
+    Add-AzAccount `
+        -ServicePrincipal `
+        -TenantId $servicePrincipalConnection.TenantId `
+        -ApplicationId $servicePrincipalConnection.ApplicationId `
+        -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+}
+catch {
+    if (!$servicePrincipalConnection)
+    {
+        $ErrorMessage = "Connection $connectionName not found."
+        throw $ErrorMessage
+    } else{
+        Write-Error -Message $_.Exception
+        throw $_.Exception
+    }
+}
+# // ####################################################
+# // ####################################################
+# // End Azure Automation Login Using Service Principal
+# // ####################################################
+# // ####################################################
+
 #Provide the name of your resource group
 $resourceGroupName ='Backup'
 $vmResourceGroup = 'WinVM'
