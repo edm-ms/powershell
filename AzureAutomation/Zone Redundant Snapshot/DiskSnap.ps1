@@ -29,7 +29,7 @@ $location = 'eastus2' # // Azure region to search for VM's
 $snapRG = 'Backup' # // Resource group to hold snapshot
 $snapDate = Get-Date -f MM-dd-yyyy # // Set snapshot date
 $snapTime = Get-Date -f HH-mm # // Set snapshot time
-$snapshotName = "snap-time-$snapTime-date-$snapDate" # // Snapshot name
+$snapshotName = "$tagToFind-snap-time-$snapTime-date-$snapDate" # // Snapshot name
 $vmList = @() # // Re-initialize variable
 
 # //	Find all VM's in a region
