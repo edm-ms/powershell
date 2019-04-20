@@ -1,13 +1,16 @@
 <#
 
 .SYNOPSIS
-    Script to grab existing Azure Stack SKU's and populate them as objects.
+    Script to grab existing Azure Stack SKU's and populate them as command line objects.
 
 .DESCRIPTION
     This script will grab the existing published Azure Stack SKU's from the following URL.
 
+.PARAMETER MatchFile
+    Eventually will ask for input file to match against Azure Stack SKUs
+
 .EXAMPLE
-    parseStackSKU.ps1 
+    ./parseStackSKU.ps1 
 
 .NOTES
     Plan to add parameters for a few things like -MatchFile to match values in stack to a file.
@@ -16,6 +19,7 @@
     Azure Stack SKUs: https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-vm-sizes
 
 #>
+
 Function ConvertTo-NormalHTML {
     param([Parameter(Mandatory = $true, ValueFromPipeline = $true)]$HTML)
 
