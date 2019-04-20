@@ -1,3 +1,21 @@
+<#
+
+.SYNOPSIS
+    Script to grab existing Azure Stack SKU's and populate them as objects.
+
+.DESCRIPTION
+    This script will grab the existing published Azure Stack SKU's from the following URL.
+
+.EXAMPLE
+    parseStackSKU.ps1 
+
+.NOTES
+    Plan to add parameters for a few things like -MatchFile to match values in stack to a file.
+
+.LINK
+    Azure Stack SKUs: https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-vm-sizes
+
+#>
 Function ConvertTo-NormalHTML {
     param([Parameter(Mandatory = $true, ValueFromPipeline = $true)]$HTML)
 
@@ -33,7 +51,7 @@ $tables = @($stackHTML.getElementsByTagName('TABLE'))
 # Disk IOP format --- need to break apart to new field |  8 / 8x500
 
 $titles = @()
-$skuReport = @()
+$global:skuReport = @()
 
 # // Loop through all tables in HTML
 foreach ($table in $tables) {
@@ -75,7 +93,7 @@ foreach ($table in $tables) {
 
         }
 
-        $skuReport += $skuObj
+        $global:skuReport += $skuObj
 
     }
 }
