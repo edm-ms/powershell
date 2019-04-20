@@ -2,9 +2,26 @@ Function ConvertTo-NormalHTML {
     param([Parameter(Mandatory = $true, ValueFromPipeline = $true)]$HTML)
 
     $NormalHTML = New-Object -Com "HTMLFile"
-    $NormalHTML.IHTMLDocument2_write($HTML.RawContent)
-    return $NormalHTML
+
+    # // Try IHTMLDocument2_write if possible, fall back otherwise
+    try {
+
+        $NormalHTML.IHTMLDocument2_write($HTML.RawContent)
+        return $NormalHTML
+
+    }
+    catch {
+
+        $src = [System.Text.Encoding]::Unicode.GetBytes($HTML.RawContent)
+        $NormalHTML.write($src)
+        return $NormalHTML
+
+    }
+    
 }
+
+# // Allow PowerShell to use different TLS versions
+[Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls" 
 
 $stackVMSizes = 'https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-vm-sizes'
 
@@ -18,28 +35,40 @@ $tables = @($stackHTML.getElementsByTagName('TABLE'))
 $titles = @()
 $skuReport = @()
 
+# // Loop through all tables in HTML
 foreach ($table in $tables) {
 
+    # // Grab all rows in current table
     $rows = @($table.Rows)
 
+    # // Loop through all rows in current table
     foreach($row in $rows)
 
     {
 
+        # // Grab all cells in current row
         $cells = @($row.Cells)
 
         # // Find title header and build names
-
         if ($cells[0].tagName -eq "TH") { $titles = @($cells | % { ("" + $_.InnerText).Trim() }) }
-        if ($titles[0] -eq 'Size - Size\Name') { break } # // Move to next table in loop if retired SKU
-        if ($titles[0] -eq $cells[0].InnerText) { continue } # // Move to next row in table if header row
+
+        # // Move to next table in loop if retired SKU
+        if ($titles[0] -eq 'Size - Size\Name') { break } 
+
+        # // Move to next row in table if header row
+        if ($titles[0] -eq $cells[0].InnerText) { continue } 
 
         $counter = 0
         $skuObj = New-Object System.Object
 
+        # // Loop through all cells in current row
         foreach ($item in $cells) {
 
             $skuData = ($item.InnerText).Trim()
+
+            # // Test if value can be an integer and cast as int if true
+            if ( [bool]($skuData -as [int] -is [int]) -eq $true) { $skuData = [int]$skuData }
+
             $skuObj | Add-Member -NotePropertyName $titles[$counter] -NotePropertyValue $skuData -Force
 
             $counter ++
