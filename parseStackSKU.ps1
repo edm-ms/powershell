@@ -7,7 +7,21 @@
     This script will grab the existing published Azure Stack SKU's from the following URL.
 
 .PARAMETER MatchFile
-    Eventually will ask for input file to match against Azure Stack SKUs
+    Specify a CSV file to import and match against Azure Stack SKUs. The columns in the file
+    need to follow this naming convention, but they do not need to be in a specific order:
+
+    Name, vCPU, Memory, Space
+
+    Name = VMNAme
+    vCPU = Count of vCPU's
+    Memory = Memory in GB
+    Space = Drive space assigned to VM
+
+.PARAMETER ForceMatch
+    Switch to specify "force match" where VM's will be matched to a SKU regardless if they align
+    or not. So as an example a VM with 256GB RAM (larger than anuy single Azure Stack SKU) will
+    be matched to the next closest memory matched (128GB) SKU.
+    
 
 .EXAMPLE
     parseStackSKU.ps1
@@ -51,9 +65,28 @@
 
 [CmdletBinding()]
     Param(
+        [Parameter(Mandatory=$false, HelpMessage="Specify file name to match SKUs against")]
+        [ValidateNotNullOrEmpty()]
+        [string]$MatchFile,
+
         [Parameter(Mandatory=$false)]
-        [switch]$MatchFile
+        [switch]$ForceMatch
 )
+
+if ($MatchFile -eq $true) { Write-Host 'You want to match a file!'; exit }
+
+Function MatchSKUs {
+
+    foreach ($vm in $MatchFile) {
+
+        # // Match Mem SKU's ?
+        # // Match CPU SKU's ?
+        # // Rank/rate best match and pick one? First match?
+        # // If larger drive space choose larger SKU?
+
+    }
+
+}
 Function ConvertTo-NormalHTML {
     param([Parameter(Mandatory = $true, ValueFromPipeline = $true)]$HTML)
 
