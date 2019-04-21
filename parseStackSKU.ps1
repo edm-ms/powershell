@@ -14,21 +14,29 @@
 
     Run this to store the global variable $skuReport.
     Once this has been run use the examples below to retreive SKU data from the object.
+    A full list of objects can be retrieved with the following command.
+
+    PS C:\>$skuReport | Get-Member 
 
 .EXAMPLE
-    $skuReport | where vCPU -gt 8 | select Size, vCPU, 'Memory (GiB)'
+    $skuReport | where vCPU -gt 8 | select SKU, vCPU, Memory
 
     Find SKUs greater than 8 vCPU then select SKU Name, vCPU count, and Memory
 
 .EXAMPLE
-    $skuReport | where vCPU -le 4 | where 'Memory (GiB)' -ge 32 | select Size, vCPU, 'Memory (GiB)'
+    $skuReport | where vCPU -le 4 | where Memory -ge 32 | select SKU, vCPU, Memory
 
-    Find SKUs less than or equal to 4 vCPU and greater than or equal to 32GB memory, select SKU Name, vCPU count, and Memory
+    Find SKUs less than or equal to 4 vCPU and greater than or equal to 32GB memory
 
 .EXAMPLE
-    $skuReport | Measure-Object 'Memory (GiB)' -Average -Maximum -Minimum
+    $skuReport | Measure-Object Memory -Maximum -Minimum -Average 
 
-    Find maximum, minimum, and average memory values of all SKUs
+    Display maximum, minimum, and average memory values of all SKUs
+
+.EXAMPLE
+    $skuReport | where MaxIOPS -gt 20000 | select SKU, vCPU, Memory, MaxIOPS | sort MaxIOPS -Descending
+
+    Search for all systems capable of over 20,000 IOPS, and sort by highest IO SKUs first
 
 .OUTPUTS
     $skuReport
@@ -115,10 +123,11 @@ foreach ($table in $tables) {
             # // Test if value can be an integer and cast as int if true
             if ( [bool]($skuData -as [int] -is [int]) -eq $true) { $skuData = [int]$skuData }
 
-            # // Reduce length of long title names
+            # // Change some title names
+            if ( $titles[$counter] -eq 'Size') { $titles[$counter] = 'SKU' }
             if ( $titles[$counter] -eq 'Memory (GiB)') { $titles[$counter] = 'Memory' }
-            if ( $titles[$counter] -eq 'Max OS disk throughput (IOPS)') { $titles[$counter] = 'MaxOsDriveIOPS' }
-            if ( $titles[$counter] -eq 'Max temp storage throughput (IOPS)') { $titles[$counter] = 'MaxTempDriveIOPS' }
+            if ( $titles[$counter] -eq 'Max OS disk throughput (IOPS)') { $titles[$counter] = 'OsDriveIOPS' }
+            if ( $titles[$counter] -eq 'Max temp storage throughput (IOPS)') { $titles[$counter] = 'TempDriveIOPS' }
             if ( $titles[$counter] -eq 'Max NICs') { $titles[$counter] = 'NICs' }
 
             # // Check if this is the combined data disk and IOPS field
@@ -131,14 +140,14 @@ foreach ($table in $tables) {
                 $driveSplit = $skuData.Split('/')
                 $maxDrives = $driveSplit[0]
                 $maxDrives = [int]$maxDrives
-                $maxIOPS = $driveSplit[1].Trim()
-                $maxIOPS = $maxIOPS.Split('x')[1]
-                $maxIOPS = [int]$maxIOPS
-                $maxTotalIOPS = $maxDrives * $maxIOPS
+                $driveIOPS = $driveSplit[1].Trim()
+                $driveIOPS = $driveIOPS.Split('x')[1]
+                $driveIOPS = [int]$driveIOPS
+                $maxIOPS = $maxDrives * $driveIOPS
 
                 $skuObj | Add-Member -NotePropertyName 'MaxDrives' -NotePropertyValue $maxDrives -Force
-                $skuObj | Add-Member -NotePropertyName 'MaxSingleDriveIOPS' -NotePropertyValue $maxIOPS -Force
-                $skuObj | Add-Member -NotePropertyName 'MaxTotalIOPS' -NotePropertyValue $maxTotalIOPS -Force
+                $skuObj | Add-Member -NotePropertyName 'DriveIOPS' -NotePropertyValue $driveIOPS -Force
+                $skuObj | Add-Member -NotePropertyName 'MaxIOPS' -NotePropertyValue $maxIOPS -Force
 
                 $counter ++
 
@@ -156,3 +165,8 @@ foreach ($table in $tables) {
 
     }
 }
+
+Write-Host ' '
+Write-Host 'Success!'
+Write-Host 'To see what to do next type: help .\parseStackSKU.ps1 -ex'
+Write-Host ' '
