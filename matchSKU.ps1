@@ -13,18 +13,29 @@ $cml = 0 # // CPU Match Loop
 $mml = 0 # // Memory Match Loop
 $mn = 0 # // Memory Normalization Loop
 $ll = 0 # Logic Loop
+$iL = 0 # Integer convert loop
 
 $driveSKUs = @(1, 32, 64, 128, 256, 512, 1024, 2048, 4096)
 
 $asrMaxDriveSize = 4096
 $osExclusions = @('', '*Router*', '*BSD*', '*Windows XP*', '*Windows 7*', '*Windows 8*', '*Windows 10*')
+$clientVMExclusions = Get-Content 'C:\Users\ermoor\git\powershell\exclude.txt'
 
 $vmToMatch = @()
-$vmToMove = @()
 $memMatch = @()
 $matchedSKUs = @()
 $vmExclusions = @()
 $matchedDrives = @()
+
+# // Convert array strings to integers
+
+Do {
+
+    $dcReport[$il].TotalSpace = [int]$dcReport[$il].TotalSpace
+    $iL ++
+
+} While ($il -lt $dcReport.Count)
+
     
 # // Build Exclusions
 
@@ -65,8 +76,27 @@ foreach ($vm in $dcReport) {
 
     }
 
-$vmToMatch += ($dcReport | where Name -NotIn $vmExclusions.Name | select vCPU, Memory)
-$vmToMove += ($dcReport | where Name -NotIn $vmExclusions.Name)
+    foreach ($vm in $dcReport) {
+
+        # $vmExclusions += ($dcReport | where OS -Like $vm | select Name).Name
+    
+        foreach ($item in $clientVMExclusions) {
+    
+            If ($vm.Name -eq $item) {
+    
+                $vmExcludeObj = New-Object System.Object
+                $vmExcludeObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
+                $vmExcludeObj | Add-Member -NotePropertyName Reason -NotePropertyValue 'Client Exclusion'
+                $vmExcludeObj | Add-Member -NotePropertyName Value -NotePropertyValue $vm.OS
+        
+                $vmExclusions += $vmExcludeObj
+    
+                }
+            }
+    
+        }
+
+$vmToMatch += ($dcReport | where Name -NotIn $vmExclusions.Name)
 
 # // Normalize memory values, matching Azure SKU, and rounding up
 
@@ -90,18 +120,18 @@ foreach ($azureVM in $vmToMatch) {
     if ( $azureVM.vCPU -ge 6 -and $azureVM.Memory -ge 16384) { $vmToMatch[$ll].vCPU = 8  } # // Adjust CPU/Mem balance
     if ( $azureVM.vCPU -ge 6 -and $azureVM.Memory -lt 16384) { $vmToMatch[$ll].vCPU = 4  } # // Adjust CPU/Mem balance
     if ( $azureVM.Memory -le 4096 -and $azureVM.vCPU -ge 4) { $vmToMatch[$ll].vCPU = 2  } # // Adjust CPU/Mem balance
+    if ( $azureVM.vCPU -ge 6 -and $azureVM.Memory -gt 16384) { $vmToMatch[$ll].Memory = 32768  } # // Bump memory up for better cost savings on 32gb systems
 
     $ll ++
 
     }
 
-$cpuCountType = $vmToMatch | Group-Object vCPU | Select Name 
+$cpuCountType = $vmToMatch | Group-Object vCPU | Select Name # // build list of types of vCPU config, i.e. 1, 2, 8, etc.
 
 foreach ($cpuMatch in $cpuCountType) {
 
-    $cpuMatch = $cpuMatch.Name
-
-    $memCountType = $vmToMatch | where vCPU -eq $cpuMatch | Group-Object Memory
+    $cpuMatch = $cpuMatch.Name # // Select vCPU config
+    $memCountType = $vmToMatch | where vCPU -eq $cpuMatch | Group-Object Memory # // grab all systems with the vCPU config and sort by memory
 
     foreach ($memMatch in $memCountType) {
         
@@ -145,12 +175,25 @@ foreach ($cpuMatch in $cpuCountType) {
 
 
 $i = 1
+$driveSizesInt = @()
+$vmToMatch.TotalSpace | % { $driveSizesInt += [int]$_ }
 
 foreach ($drive in $driveSKUs) {
 
     if ($driveSKUs[$i] -eq $null) { break }
 
-    $driveQTY = ($vmToMove.drives | % { ($_.Values -le $driveSKUs[$i]) -gt $drive } | measure | select Count).Count
+    if ($vmToMatch.Drives -eq $null) { 
+
+        $driveQTY = $driveSizesInt | % { $_ -le $driveSKUs[$i] -and $_ -gt $drive } 
+        $driveQTY = ($driveQTY | where { $_ -match $True } | measure).Count
+
+    }
+    else {
+
+        $driveQTY = ($vmToMatch.drives | % { ($_.Values -le $driveSKUs[$i]) -gt $drive } | measure | select Count).Count    
+
+    }
+    
 
     $driveObj = New-Object System.Object
     $driveObj | Add-Member -NotePropertyName Size -NotePropertyValue $driveSKUs[$i]
@@ -163,6 +206,5 @@ foreach ($drive in $driveSKUs) {
 }
 
 $matchedSKUs = $matchedSKUs | Sort-Object qty -Descending
-
 $matchedSKUs | Select-Object Qty, SKU
 

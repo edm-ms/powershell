@@ -1,0 +1,761 @@
+﻿Name,State,OS,vCPU,Memory,TotalSpace,DriveCount
+acs01-k,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+acs01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+acs01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+acs02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+acs02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+acspak01-k,PoweredOn,CentOS 7 (64-bit),2,16384,32,1
+acspak01-p,PoweredOn,CentOS 4/5 or later (64-bit),8,65536,128,1
+acspak01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,32768,48,1
+acspak02-p,PoweredOn,CentOS 4/5 or later (64-bit),8,65536,144,1
+acspak02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,32,1
+amq01-V2V,PoweredOn,CentOS 4/5 or later (64-bit),4,4096,28,1
+amq02-V2V,PoweredOn,CentOS 4/5 or later (64-bit),4,4096,28,1
+andromeda-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+angus-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+anr01-a,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,16384,403,1
+anrsolr01-a,PoweredOn,CentOS 4/5 or later (64-bit),4,32768,1040,1
+anrsolr01-i,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,536,1
+anrsolr01-p,PoweredOn,CentOS 7 (64-bit),4,32768,1072,1
+anrsolr02-a,PoweredOn,CentOS 4/5 or later (64-bit),4,32768,816,1
+apache01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+athens01-c,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+athens01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+athens02-p,PoweredOn,CentOS 6 (64-bit),2,8192,16,1
+atlassian01-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,28,1
+atlassian02-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,32,1
+balancer-P2V,PoweredOn,CentOS 4/5 or later (64-bit),4,4096,28,1
+bauth01-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bauth01-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bauth02-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bauth02-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bauthbop01-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+bauthbop02-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+bbop01-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bbop01-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bbop02-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bbop02-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+beni-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,65536,1217,1
+beni-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,128,1
+bmc01-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+bmc01-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bmc01-t,PoweredOn,CentOS 6 (64-bit),2,8192,104,1
+bmc02-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+bmc02-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bmc02-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bmongod01-m,PoweredOn,CentOS 7 (64-bit),2,8192,224,1
+bmongod01-p,PoweredOn,CentOS 6 (64-bit),4,16384,248,1
+bmongod01-t,PoweredOn,CentOS 6 (64-bit),2,8192,240,1
+bmongod02-m,PoweredOn,CentOS 7 (64-bit),2,8192,224,1
+bmongod02-p,PoweredOn,CentOS 6 (64-bit),4,16384,232,1
+bmongod02-t,PoweredOn,CentOS 6 (64-bit),2,8192,240,1
+bmongod03-p,PoweredOn,CentOS 6 (64-bit),4,16384,248,1
+bmongod03-t,PoweredOn,CentOS 6 (64-bit),2,8192,224,1
+booksvc01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+booksvc01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+booksvc02-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+booksvc02-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+bops01-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bops01-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bops02-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bops02-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bpub01-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bpub01-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bpub02-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bpub02-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bpubops01-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+bpubops02-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+bstatic01-m,PoweredOn,CentOS 7 (64-bit),4,8192,16,1
+bstatic01-p,PoweredOn,CentOS 6 (64-bit),4,8192,32,1
+bstatic01-t,PoweredOn,CentOS 6 (64-bit),4,8192,40,1
+bstatic02-m,PoweredOn,CentOS 7 (64-bit),4,8192,16,1
+bstatic02-p,PoweredOn,CentOS 6 (64-bit),4,8192,40,1
+bstatic02-t,PoweredOn,CentOS 6 (64-bit),4,8192,40,1
+bswagger01-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bswagger01-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bswagger02-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+bswagger02-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+btools01-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+btools01-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+btools02-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+btools02-t,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+btoolsswagger01-m,PoweredOn,CentOS 7 (64-bit),2,8192,16,1
+btoolsswagger02-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+bucket01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+bucket01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+bucket01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+build-box01,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,737,1
+build-box02,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+build-ebl01,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,16384,321,1
+build-el6,PoweredOn,CentOS 4/5 or later (64-bit),4,16384,32,1
+build-el7,PoweredOn,CentOS 7 (64-bit),4,16384,32,1
+centauri-V2V,PoweredOn,CentOS 4/5 or later (64-bit),4,8192,24,1
+centaurus-V2V,PoweredOn,CentOS 4/5 or later (64-bit),4,8192,32,1
+chef01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,132,1
+cloudchomp-cvie,PoweredOn,,1,4096,34,1
+cmf01-m,PoweredOn,CentOS 7 (64-bit),2,16384,32,1
+cmf01-p,PoweredOn,CentOS 6 (64-bit),4,32768,64,1
+cmf01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+cmx01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+cmx01-t,PoweredOn,CentOS 6 (64-bit),2,8192,16,1
+cmx02-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+cmx02-t,PoweredOn,CentOS 6 (64-bit),2,8192,16,1
+cns01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,32,1
+cns01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+cns01-i-v2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+collection01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,24,1
+collection01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+collection01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+coredeployment01,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+cstools01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,40,1
+cstools01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+cstools01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,6144,30,1
+cvie-test,PoweredOn,,4,32768,112,1
+d42-rc.ebrary.com,PoweredOn,,2,4096,36,1
+danube01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,32768,4225,1
+danube-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,32768,102228,1
+danube-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,24576,7255,1
+db01-m,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,32768,2177,1
+db01-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,897,1
+db02-m,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+db02-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,49152,2737,1
+db02-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,3712,1
+db03-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,65536,7553,1
+dc01,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),2,8192,129,1
+dc02,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),2,8192,128,1
+dc03,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,64,1
+dc04,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,72,1
+dcp01-k,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+dcp01-m,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,32,1
+dcp02-m,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,32,1
+dcpauth01-p,PoweredOn,CentOS 4/5 or later (64-bit),4,8192,24,1
+dcpauth01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+dcpauth02-p,PoweredOn,CentOS 4/5 or later (64-bit),4,8192,24,1
+dcpauth02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+dcpauth03-p,PoweredOn,CentOS 6 (64-bit),4,8192,24,1
+dcpauth04-p,PoweredOn,CentOS 6 (64-bit),4,8192,24,1
+dcpepubauth01-t,PoweredOn,CentOS 6 (64-bit),2,8192,16,1
+dcpepubreader01-t,PoweredOn,CentOS 6 (64-bit),2,8192,16,1
+dcpmc01-k,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+dcpmc01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dcpmc01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dcpmc02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dcpmc02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dcpreader01-p,PoweredOn,CentOS 4/5 or later (64-bit),4,16384,64,1
+dcpreader01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+dcpreader02-p,PoweredOn,CentOS 4/5 or later (64-bit),4,16384,64,1
+dcpreader02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dcpreader03-p,PoweredOn,CentOS 6 (64-bit),4,16384,64,1
+dcpreader04-p,PoweredOn,CentOS 6 (64-bit),4,16384,48,1
+dcpreader05-p,PoweredOn,CentOS 6 (64-bit),4,16384,48,1
+dcpreader06-p,PoweredOn,CentOS 6 (64-bit),4,16384,64,1
+dcptools01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+dcptools01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-aakl01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,192,1
+dev-aayyagar01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-abanh01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-abanh02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-acc01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-acs01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-acspak01,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,32,1
+dev-adhrolia01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,16384,140,1
+dev-adhrolia02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-adhrolia03,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-aharamas01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,260,1
+dev-ajangam01,PoweredOn,CentOS 6 (64-bit),2,8192,34,1
+dev-ajangam02,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,16384,136,1
+dev-anrsolr01,PoweredOn,CentOS 4/5 or later (64-bit),4,32768,560,1
+dev-anrteam01,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,16384,400,1
+dev-athens01,PoweredOn,CentOS 6 (64-bit),4,12288,28,1
+dev-bauth01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-bauth02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-bbop01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-bbop02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-beni01,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,8192,2110,1
+dev-bmc02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-bmongod01,PoweredOn,CentOS 6 (64-bit),2,8192,224,1
+dev-bmongod02,PoweredOn,CentOS 6 (64-bit),2,8192,224,1
+dev-booksvc01,PoweredOn,CentOS 6 (64-bit),2,8192,29,1
+dev-booksvc02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-bops01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-bops02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-bpub01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-bpub02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-bstatic01,PoweredOn,CentOS 4/5 or later (64-bit),4,8192,24,1
+dev-bstatic02,PoweredOn,CentOS 6 (64-bit),4,8192,24,1
+dev-bswagger01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-bswagger02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-btools01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,384,1
+dev-btools02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+devci-core,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+devci-dcp,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+devci-mc,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+devci-mongo,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+devci-rmq,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+devci-solr,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-cmf01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-cmx01,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+dev-cmx02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-consol01,PoweredOn,,2,16384,1056,1
+dev-csolr01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,216,1
+dev-csolr02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,216,1
+dev-danube,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,6281,1
+dev-db01,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,16384,897,1
+dev-db02,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,49152,2993,1
+dev-dcpauth01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-dcpauth02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-dcpmc01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-dcpmc02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-dcpreader01,PoweredOn,CentOS 6 (64-bit),2,8192,16,1
+dev-dcpreader02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-dcptools01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,32,1
+dev-dkoul01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,40,1
+dev-dkoul02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,40,1
+dev-dmasales01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,216,1
+dev-dmiao01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-don01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,2180,1
+dev-don02,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,86016,2947,1
+dev-don03,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-don04,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-elk01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-ezproxy01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-fm01,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,201,1
+dev-fs01,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,4230,1
+dev-ftp01,PoweredOn,CentOS 6 (64-bit),2,8192,56,1
+dev-grande01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,1665,1
+dev-grande02,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,65536,3036,1
+dev-grande03,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+dev-grande04,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-ha01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-ha02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+Device42,PoweredOn,,2,4096,55,1
+dev-infra01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,104,1
+dev-jwyrembe01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,129,1
+dev-jwyrembe02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-mc01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-mc02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-mc03,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-mc04,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-mcr01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-mcr02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-mekong,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,12288,388,1
+dev-mjaiswa101,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,16384,252,1
+dev-mnorris01,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+dev-mnorris02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-mongoc01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,40,1
+dev-mongod01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod03,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod04,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod05,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod06,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod07,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod08,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod09,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongod10,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+dev-mongos01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,40,1
+dev-mswanson01.,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,129,1
+dev-mswanson02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-mysql01,PoweredOn,Oracle Linux 4/5 or later (64-bit),2,8192,1064,1
+dev-mysql02,PoweredOn,Oracle Linux 4/5 or later (64-bit),2,8192,1064,1
+dev-nfs01,PoweredOn,CentOS 6 (64-bit),2,8192,3096,1
+dev-ngrewal01,PoweredOn,CentOS 6 (64-bit),2,16384,64,1
+dev-nile,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,256,1
+dev-ntripath01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-oaamq01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-oaauto01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-oaauto02,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,192,1
+dev-oaauto03,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+dev-oacis01,PoweredOn,CentOS 6 (64-bit),16,262144,19861,1
+dev-oacis02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-oars01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-oars02,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-oasearch01,PoweredOn,CentOS 6 (64-bit),2,8192,324,1
+dev-oasearch02,PoweredOn,CentOS 6 (64-bit),2,8192,324,1
+dev-oasearch03,PoweredOn,CentOS 6 (64-bit),2,8192,324,1
+dev-oasolr01,PoweredOn,CentOS 6 (64-bit),2,8192,528,1
+dev-oasolr02,PoweredOn,CentOS 6 (64-bit),2,8192,528,1
+dev-oasonar01,PoweredOn,CentOS 6 (64-bit),4,16384,160,1
+dev-oawebapp01,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+dev-oawebapp02,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+dev-oaz395001,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-orange01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,1673,1
+dev-orange02,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,65536,3035,1
+dev-orange03,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-orange04,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-pearl,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,12288,640,1
+dev-pif01,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+dev-pnidadav01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-pub01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+dev-pubshare01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-rasterx01,PoweredOn,CentOS 6 (64-bit),4,16384,56,1
+dev-rasterx02,PoweredOn,CentOS 6 (64-bit),4,16384,56,1
+dev-rasterx03,PoweredOn,CentOS 6 (64-bit),4,16384,56,1
+dev-rasterx04,PoweredOn,CentOS 6 (64-bit),4,16384,64,1
+dev-rbelt01,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+dev-rec01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-redism01,PoweredOn,CentOS 6 (64-bit),2,65536,336,1
+dev-redism02,PoweredOn,CentOS 6 (64-bit),2,65536,448,1
+dev-rediss01,PoweredOn,CentOS 6 (64-bit),2,65536,336,1
+dev-rediss02,PoweredOn,CentOS 6 (64-bit),2,65536,336,1
+dev-rep01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-rep02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-rmq01,PoweredOn,CentOS 6 (64-bit),2,4096,132,1
+dev-rsync01,PoweredOn,CentOS 6 (64-bit),4,16384,16,1
+dev-rwright01,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+dev-rwyrembe01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,129,1
+dev-salween,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,8192,2191,1
+dev-sgorski01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,260,1
+dev-shibb01,PoweredOn,CentOS 6 (64-bit),2,8192,32,1
+dev-sliu01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+dev-smeduri01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-solr01,PoweredOn,CentOS 6 (64-bit),2,8192,272,1
+dev-solr02,PoweredOn,CentOS 6 (64-bit),2,8192,272,1
+dev-solr03,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr04,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr05,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr06,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr07,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr08,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr09,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr10,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr11,PoweredOn,CentOS 6 (64-bit),4,16384,288,1
+dev-solr12,PoweredOn,CentOS 6 (64-bit),4,16384,288,1
+dev-solr13,PoweredOn,CentOS 6 (64-bit),4,16384,288,1
+dev-solr14,PoweredOn,CentOS 6 (64-bit),4,16384,288,1
+dev-solr21,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr22,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr23,PoweredOn,CentOS 6 (64-bit),2,8192,272,1
+dev-solr24,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr25,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr26,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr27,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr28,PoweredOn,CentOS 6 (64-bit),2,8192,288,1
+dev-solr29,PoweredOn,,2,8192,24,1
+dev-solr30,PoweredOn,,2,8192,24,1
+dev-sp01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,265,1
+dev-spandigu01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,16384,140,1
+dev-ssivaram01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-sso01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-sso02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,40,1
+dev-ssomc01,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+dev-vbharadw01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+dev-win01,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),4,16384,214,1
+dev-ws01,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,192,1
+dev-ws02,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,192,1
+dev-wsconv01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,137,1
+dev-www01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-www02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-yaz01,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,36,1
+dev-yzou01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+dev-yzou02,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+doc01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,24,1
+doc01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),4,4096,28,1
+doc01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+docproc01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,40,1
+docproc01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),4,4096,28,1
+docproc01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+docproc02-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,24,1
+Don01-k,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,4225,1
+don01-m,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+don01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),16,167936,8982,1
+don01-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,36864,2213,1
+don02-m,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+don02-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,36864,209,1
+don-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,65536,2241,1
+dsub01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),8,16384,24,1
+dsub01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+ebcdb01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,5761,1
+ebcdb01-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,1665,1
+ebcdb02-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,5761,1
+ebcdb02-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,1665,1
+ebl-sandbox01,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,49152,3200,1
+ebl-sandbox02,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+elk01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+ezproxy01-a,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+ezproxy01-c,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+ezproxy01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+ezproxy01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+ezproxy02-a,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+ezproxy02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+ezproxy02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+fm01-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,131072,1027,1
+fm01-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,16384,195,1
+Fs01-k,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,7304,1
+fs01-m,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,2182,1
+fs01-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,32768,30870,1
+ftp01,PoweredOn,CentOS 6 (64-bit),2,2048,1248,1
+ftp01-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+ftp01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,1048,1
+ftp01-t,PoweredOn,CentOS 6 (64-bit),2,8192,56,1
+ftp02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,280,1
+galaxy01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+geoip01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+gerrit01,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+github-V2V,PoweredOn,CentOS 4/5 or later (64-bit),4,8192,32,1
+Grande01-k,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,1665,1
+grande01-m,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+grande01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),16,163840,3617,1
+grande01-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,36864,2213,1
+grande02-m,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+grande02-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+ha01-k,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+ha01-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+ha01-p,PoweredOn,CentOS 6 (64-bit),4,16384,96,1
+ha01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+ha02-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+ha02-p,PoweredOn,CentOS 6 (64-bit),4,16384,96,1
+ha02-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+ha03-p,PoweredOn,CentOS 6 (64-bit),4,16384,80,1
+ha04-p,PoweredOn,CentOS 6 (64-bit),4,16384,96,1
+hadar-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+hubble-P2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,52,1
+idcocpm,PoweredOn,Other 3.x or later Linux (64-bit),4,12288,793,1
+ife01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+ife01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+ife01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,6144,30,1
+ife02-a-V2V,PoweredOn,,2,8192,32,1
+ife03-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+itweb01-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,28,1
+kepler-P2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,44,1
+lb01-a,PoweredOn,CentOS 6 (64-bit),2,4096,20,1
+lb01-i,PoweredOn,CentOS 6 (64-bit),1,2048,18,1
+lb02-a,PoweredOn,CentOS 6 (64-bit),2,4096,20,1
+lb02-i,PoweredOn,CentOS 6 (64-bit),1,2048,18,1
+lb03-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,20,1
+lb04-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,20,1
+libc01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,32768,201,1
+libc02-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,32768,201,1
+magellanic-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,2048,26,1
+mc01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+mc01-i,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,20,1
+mc01-k,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+mc01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,32,1
+mc01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+mc02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+mc02-i,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,20,1
+mc02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+mc02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+mc601-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+mc601-p,PoweredOn,CentOS 6 (64-bit),2,16384,32,1
+mcr01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+mcr02-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+mcr-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+mekong-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,65536,1729,1
+mekong-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,128,1
+memcache01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+memcache01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+memcache01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+memcache02-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,24,1
+memcache-dev-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+merga-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,2048,26,1
+milws01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,188,1
+milws02-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,188,1
+mobra2-P2V,PoweredOn,Other 2.6.x Linux (64-bit),4,4096,102,1
+mon01,PoweredOn,CentOS 4/5 or later (64-bit),4,16384,128,1
+mongoc01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,40,1
+mongoc01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,32,1
+mongoc02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,32,1
+mongoc03-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,40,1
+mongod01-k,PoweredOn,CentOS 7 (64-bit),4,16384,1579,1
+mongod01-m,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,544,1
+mongod01-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,656,1
+mongod02-k,PoweredOn,CentOS 7 (64-bit),4,16384,800,1
+mongod02-m,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,544,1
+mongod02-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1168,1
+mongod02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,656,1
+mongod03-k,PoweredOn,CentOS 7 (64-bit),4,16384,800,1
+mongod03-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1168,1
+mongod03-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,656,1
+mongod04-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod04-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,656,1
+mongod05-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod05-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,656,1
+mongod06-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod06-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,656,1
+mongod07-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod08-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod09-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod10-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod11-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod12-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod13-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1168,1
+mongod14-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod15-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1168,1
+mongod16-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongod17-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1168,1
+mongod18-p,PoweredOn,CentOS 4/5 or later (64-bit),4,49152,1216,1
+mongos01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,32,1
+mongos01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,32,1
+mongos02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,32,1
+mssql03,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,16384,3089,1
+mssql05,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,49152,4224,1
+mv-www01,PoweredOn,Oracle Linux 4/5 or later (64-bit),2,4096,36,1
+mysql01-a,PoweredOn,Oracle Linux 4/5 or later (64-bit),4,16384,2096,1
+mysql02-a,PoweredOn,Oracle Linux 4/5 or later (64-bit),4,32768,2080,1
+mysql02-replacement,PoweredOn,CentOS 4/5 or later (64-bit),4,32768,2094,1
+mysql03-P2V,PoweredOn,Red Hat Fedora (64-bit),8,16384,4283,1
+mysql04,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,2200,1
+nagios01,PoweredOn,CentOS 7 (64-bit),8,32768,224,1
+nile-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,81920,6347,1
+nile-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,384,1
+ns1-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,24,1
+ns2-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,24,1
+oaamq01-p,PoweredOn,CentOS 6 (64-bit),2,8192,173,1
+oaamq01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oaauto01-m,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oaauto01-p,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+oaauto01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oaauto02-m,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+oaauto02-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+oaauto02-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+oaauto03-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,192,1
+oaauto03-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+oacis01-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+oacis01-p,PoweredOn,CentOS 6 (64-bit),32,262144,32131,1
+oacis01-t,PoweredOn,CentOS 6 (64-bit),8,65536,12253,1
+oacis02-p,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+oacis02-t,PoweredOn,,2,8192,24,1
+oaelk01-p,PoweredOn,CentOS 6 (64-bit),4,16384,32,1
+oaelk02-p,PoweredOn,CentOS 6 (64-bit),4,16384,16,1
+oamc01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oamc02-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oamongo01-m,PoweredOn,CentOS 7 (64-bit),2,8192,224,1
+oamongo01-t,PoweredOn,CentOS 6 (64-bit),2,8192,224,1
+oapoc01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oapoc01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oapro2sql-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,16384,193,1
+oapro2sql-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,16384,209,1
+oars01-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+oars01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oars01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oars02-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oasearch01-p,PoweredOn,CentOS 6 (64-bit),2,8192,324,1
+oasearch01-t,PoweredOn,CentOS 6 (64-bit),2,8192,324,1
+oasearch02-p,PoweredOn,CentOS 6 (64-bit),2,8192,316,1
+oasearch02-t,PoweredOn,CentOS 6 (64-bit),2,8192,324,1
+oasearch03-p,PoweredOn,CentOS 6 (64-bit),2,8192,324,1
+oasearch03-t,PoweredOn,CentOS 6 (64-bit),2,8192,324,1
+oasmb01,PoweredOn,CentOS 6 (64-bit),2,8192,16,1
+oasmb01-p,PoweredOn,CentOS 6 (64-bit),2,8192,16,1
+oasolr01-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,224,1
+oasolr01-p,PoweredOn,CentOS 4/5 or later (64-bit),8,16384,544,1
+oasolr01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,536,1
+oasolr02-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,224,1
+oasolr02-p,PoweredOn,CentOS 4/5 or later (64-bit),8,16384,544,1
+oasrvapp01-t,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),2,8192,192,1
+oawebapp01-m,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+oawebapp01-p,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),8,49152,192,1
+oawebapp01-t,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),4,32768,192,1
+oawebapp02-m,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+oawebapp02-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,49152,192,1
+oawebapp02-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,193,1
+oawebapp03-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,49152,192,1
+oawebapp03-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,32768,194,1
+oawebdb01-t,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),2,8192,201,1
+oaz395001-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+oaz395002-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+ora03-a,PoweredOn,Oracle Linux 4/5 or later (64-bit),4,32768,4267,1
+Orange01-k,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,1665,1
+orange01-m,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,132,1
+orange01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),16,163840,3617,1
+orange01-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,36864,2689,1
+orange02-m,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+orange02-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,8192,124,1
+partners01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,32,1
+partners01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+partners01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+pearl-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,65536,384,1
+pearl-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,256,1
+pif01-m,PoweredOn,CentOS 7 (64-bit),2,8192,40,1
+pif01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+pif01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+polaris-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,24,1
+pollux-V2V,PoweredOn,,2,2048,24,1
+pqdev-dcp01,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+pqsearch01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,24,1
+pqsearch01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,6144,30,1
+pqsearch02-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+pub01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+pub01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+pub02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+pub02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+pubshare01-p,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+pubshare01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+puppetfront-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+raster01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,24,1
+raster01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+raster01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+raster02-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+raster03-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,24,1
+raster04-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+rasterx01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,144,1
+rasterx02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,144,1
+rasterx601-m,PoweredOn,CentOS 7 (64-bit),2,16384,32,1
+rasterx601-p,PoweredOn,CentOS 6 (64-bit),12,65536,112,1
+rasterx6-01-t,PoweredOn,CentOS 6 (64-bit),8,32768,32,1
+rasterx602-m,PoweredOn,CentOS 7 (64-bit),2,16384,32,1
+rasterx602-p,PoweredOn,CentOS 6 (64-bit),12,65536,112,1
+rasterx6-02-t,PoweredOn,CentOS 6 (64-bit),2,32768,48,1
+rasterx603-p,PoweredOn,CentOS 6 (64-bit),12,65536,112,1
+rasterx604-p,PoweredOn,CentOS 6 (64-bit),12,65536,112,1
+rasterx605-p,PoweredOn,CentOS 6 (64-bit),12,65536,112,1
+rasterx606-p,PoweredOn,CentOS 6 (64-bit),12,65536,112,1
+rec01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+rec01-i,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+rec02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+rec02-i,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+redis01-k,PoweredOn,CentOS 7 (64-bit),2,8192,280,1
+redism01-p,PoweredOn,CentOS 6 (64-bit),8,131072,400,1
+redism01-sbx,PoweredOn,CentOS 4/5 or later (64-bit),2,65536,336,1
+redism01-t,PoweredOn,CentOS 6 (64-bit),2,131072,400,1
+redism02-p,PoweredOn,CentOS 6 (64-bit),4,131072,528,1
+redism02-sbx,PoweredOn,CentOS 4/5 or later (64-bit),2,131072,272,1
+redism02-t,PoweredOn,CentOS 6 (64-bit),2,131072,400,1
+rediss01-p,PoweredOn,CentOS 6 (64-bit),8,131072,272,1
+rediss01-sbx,PoweredOn,CentOS 4/5 or later (64-bit),2,65536,336,1
+rediss01-t,PoweredOn,CentOS 6 (64-bit),2,131072,400,1
+rediss02-p,PoweredOn,CentOS 6 (64-bit),4,131072,400,1
+rediss02-sbx,PoweredOn,CentOS 4/5 or later (64-bit),2,65536,336,1
+rediss02-t,PoweredOn,CentOS 6 (64-bit),2,131072,400,1
+relay01-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,24,1
+relay02-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,24,1
+rep01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,20,1
+rep01-i,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+rep01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+rep01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+rep02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,20,1
+rep02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+rep02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+repint01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+repint02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+revtools01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,24,1
+revtools01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+revtools01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+rmq01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,32768,176,1
+rmq01-i,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+rmq01-k,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+rmq01-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+rmq01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,136,1
+rmq01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,64,1
+rmq02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,32768,144,1
+rmq02-i,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+rmq02-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+rmq02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,136,1
+rmq02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,64,1
+salween-p,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,65536,2239,1
+salween-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,128,1
+search01-a,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+search01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,532,1
+search01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,544,1
+search02-a,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+session01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,16384,40,1
+session01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+session01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+shibb01-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+shibb01-p,PoweredOn,CentOS 6 (64-bit),2,16384,32,1
+shibb01-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,40,1
+shibb02-m,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+shibb02-p,PoweredOn,CentOS 6 (64-bit),2,16384,16,1
+sirius-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,24,1
+sjdc101,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+sjdc102,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,64,1
+sjrdsh101,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,229,1
+SJSCOMIDCGW101,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,129,1
+sjtrend101,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,64,1
+slp01-dev-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+slp01-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,28,1
+slp02-dev-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+slp02-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,24,1
+solmc01-i,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,132,1
+solmc02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,18,1
+solmc02-i,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+solr01-k,PoweredOn,CentOS 7 (64-bit),2,8192,280,1
+solr01-m,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,288,1
+solr02-k,PoweredOn,CentOS 7 (64-bit),2,8192,280,1
+solr02-m,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,288,1
+solr03-k,PoweredOn,CentOS 7 (64-bit),2,8192,280,1
+solr04-k,PoweredOn,CentOS 7 (64-bit),2,8192,280,1
+sound01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+sound01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+sound01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,2048,26,1
+sound02-a-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+sp01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,8192,636,1
+sp-as01,PoweredOn,Microsoft Windows Server 2012 (64-bit),6,32768,224,1
+sp-fe01,PoweredOn,Microsoft Windows Server 2012 (64-bit),4,16384,192,1
+spitzer-P2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,52,1
+splunk01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,128,1
+splunk01-i,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,152,1
+splunk01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,152,1
+splunk01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,152,1
+splunk02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,128,1
+sqa02,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),2,8192,328,1
+sqa-tr01,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+sqa-ws201601,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,32768,156,1
+sqa-ws201602,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+sql-bak01,PoweredOn,Microsoft Windows Server 2012 (64-bit),8,32768,14492,1
+sqlmon01,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,124,1
+sso01-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+sso01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+sso01-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+sso02-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+sso02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+sso02-t,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,16,1
+ssomc01-p,PoweredOn,CentOS 4/5 or later (64-bit),1,8192,24,1
+ssomc01-t,PoweredOn,CentOS 4/5 or later (64-bit),1,4096,20,1
+ssrs01-a,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),4,8192,256,1
+ssrs03-a,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,192,1
+submission01-a,PoweredOn,,2,8192,24,1
+submission01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,32,1
+submission01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,32,1
+svn01-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+svn02-p,PoweredOn,CentOS 6 (64-bit),2,8192,40,1
+tachyon-P2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,1040,1
+trend01,PoweredOn,,2,16384,80,1
+vc01,PoweredOn,Microsoft Windows Server 2008 R2 (64-bit),2,16384,899,1
+vc02,PoweredOn,Other 3.x or later Linux (64-bit),8,24576,822,1
+vmboo01-V2V,PoweredOn,CentOS 4/5 or later (64-bit),4,32768,408,1
+vmboo02-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,16384,136,1
+web01-V2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,32,1
+web02-V2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,32,1
+web03-V2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,32,1
+web04-V2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,32,1
+web05-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+webapp01-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,40,1
+webapp01-c-V2V,PoweredOn,Red Hat Fedora (64-bit),2,4096,28,1
+webapp01-i-V2V,PoweredOn,Red Hat Fedora (64-bit),2,8192,32,1
+webapp02-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,24,1
+webapp03-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,40,1
+webapp04-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,40,1
+webapp05-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,40,1
+webapp06-a-V2V,PoweredOn,Red Hat Fedora (64-bit),4,16384,24,1
+webb-P2V,PoweredOn,Red Hat Fedora (64-bit),4,8192,44,1
+wordpress02-V2V,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,54,1
+wordpress03,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,88,1
+ws01-m,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,256,1
+ws01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,32768,193,1
+ws01-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,197,1
+ws02-m,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,256,1
+ws02-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,32768,193,1
+ws02-t,PoweredOn,Microsoft Windows Server 2012 (64-bit),2,8192,194,1
+ws03-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),8,32768,193,1
+ws04-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),8,32768,193,1
+wsconv01-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,129,1
+wsconv01-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,137,1
+wsconv02-p,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,137,1
+wsconv02-t,PoweredOn,Microsoft Windows Server 2016 (64-bit),2,8192,137,1
+wsus01,PoweredOn,Microsoft Windows Server 2016 (64-bit),4,16384,414,1
+www01-a,PoweredOn,Oracle Linux 4/5 or later (64-bit),2,4096,84,1
+www01-k,PoweredOn,CentOS 7 (64-bit),2,8192,24,1
+www01-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+www01-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+www01-t,PoweredOn,CentOS 6 (64-bit),2,8192,24,1
+www02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,88,1
+www02-m,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+www02-p,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,24,1
+www02-t,PoweredOn,,2,8192,24,1
+xb1-P2V,PoweredOn,CentOS 4/5 or later (64-bit),2,8192,145,1
+xb2-P2V,PoweredOn,Red Hat Fedora (64-bit),8,16384,248,1
+yaz01-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,16,1
+yaz02-a,PoweredOn,CentOS 4/5 or later (64-bit),2,4096,20,1
