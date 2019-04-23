@@ -17,11 +17,16 @@
     Memory = Memory in GB
     Space = Drive space assigned to VM
 
+.PARAMETER Match2008
+    Switch to specify only matching 2008 or SQL 2008 VM instances.
+
+.PARAMETER RoundUPvCPU
+    Switch to round vCPU up if there is no match (i.e. a 6 vCPU becomes an 8).
+
 .PARAMETER ForceMatch
     Switch to specify "force match" where VM's will be matched to a SKU regardless if they align
     or not. So as an example a VM with 256GB RAM (larger than anuy single Azure Stack SKU) will
     be matched to the next closest memory matched (128GB) SKU.
-    
 
 .EXAMPLE
     parseStackSKU.ps1
@@ -70,23 +75,48 @@
         [string]$MatchFile,
 
         [Parameter(Mandatory=$false)]
+        [switch]$Match2008,
+
+        [Parameter(Mandatory=$false)]
+        [switch]$RoundUpvCPU,
+
+        [Parameter(Mandatory=$false)]
         [switch]$ForceMatch
 )
 
-if ($MatchFile -eq $true) { Write-Host 'You want to match a file!'; exit }
-
-Function MatchSKUs {
-
-    foreach ($vm in $MatchFile) {
-
-        # // Match Mem SKU's ?
-        # // Match CPU SKU's ?
-        # // Rank/rate best match and pick one? First match?
-        # // If larger drive space choose larger SKU?
+# // Import CSV file to match against Azure Stack SKUs
+if ($MatchFile -eq $true) { 
+    
+    $matchFile = Import-Csv $MatchFile
 
     }
 
+if ($Match2008 -eq $true) { 
+
+    $MatchFile = $MatchFile | where 'OS according to the VMware Tools' -like '*Server 2008*' | where PowerState -eq 'poweredOn'
+
 }
+
+
+Function MatchSKUs {
+
+    # // Select unique memory SKUs in Azure Stack
+    $skuMemTypes = $skuReport | sort Memory -Unique | select Memory
+
+    for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
+
+        # // Loop through all memory SKUs looking for a match
+        for ($c = 0; $c -lt $skuMemTypes.Count; $c ++) {
+
+            # // If a match is found exit
+            if ($MatchFile[$i].MemoryGB -eq $skuMemTypes[$c].Memory) { break }
+            # // If a match is not found display mem size
+            if ($c -eq ($skuMemTypes.Count - 1)) { $MatchFile[$i].MemoryGB}
+
+        }
+    }
+}
+
 Function ConvertTo-NormalHTML {
     param([Parameter(Mandatory = $true, ValueFromPipeline = $true)]$HTML)
 
@@ -200,6 +230,5 @@ foreach ($table in $tables) {
 }
 
 Write-Host ' '
-Write-Host 'Success!'
-Write-Host 'To see what to do next type: help .\parseStackSKU.ps1 -ex'
+Write-Host 'Success: To see what to do next type: help .\parseStackSKU.ps1 -ex'
 Write-Host ' '
