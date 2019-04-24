@@ -18,10 +18,7 @@
     Space = Drive space assigned to VM
 
 .PARAMETER Match2008
-    Switch to specify only matching 2008 or SQL 2008 VM instances.
-
-.PARAMETER RoundUPvCPU
-    Switch to round vCPU up if there is no match (i.e. a 6 vCPU becomes an 8).
+    Switch to specify only matching Server 2008 VM instances.
 
 .PARAMETER ForceMatch
     Switch to specify "force match" where VM's will be matched to a SKU regardless if they align
@@ -78,9 +75,6 @@
         [switch]$Match2008,
 
         [Parameter(Mandatory=$false)]
-        [switch]$RoundUpvCPU,
-
-        [Parameter(Mandatory=$false)]
         [switch]$ForceMatch
 )
 
@@ -100,20 +94,62 @@ if ($Match2008 -eq $true) {
 
 Function MatchSKUs {
 
-    # // Select unique memory SKUs in Azure Stack
-    $skuMemTypes = $skuReport | sort Memory -Unique | select Memory
+    # // Normalize Values based on switches
+    # // maybe count the matches, if > 2 divide by 2 and pick that sku?
 
+    # // Convert imported fields for CPU, Memory, Space, and Drive count to integers
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
 
+        $MatchFile[$i].CPUs = [int]$MatchFile[$i].CPUs
+        $MatchFile[$i].MemoryGB = [int]$MatchFile[$i].MemoryGB
+        $MatchFile[$i].SpaceGB = [int]$MatchFile[$i].SpaceGB
+        $MatchFile[$i].Disks = [int]$MatchFile[$i].Disks
+        
+    }
+
+    # // Select unique memory and vCPU SKUs in Azure Stack
+    $skuMemTypes = $skuReport | sort Memory -Unique | select Memory
+    $skuCPUTypes = $skuReport | sort vCPU -Unique | select vCPU
+
+    # // Normalize memory values (round up if no exact match)
+    for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
+
+        # // If force memory match switch is set configure maximum memory to be 128
+        If ($ForceMatch -eq $true) { If ($MatchFile[$i].MemoryGB -gt 128) { $MatchFile[$i].MemoryGB -eq 128 }  } 
+
         # // Loop through all memory SKUs looking for a match
-        for ($c = 0; $c -lt $skuMemTypes.Count; $c ++) {
+        for ($m = 0; $m -lt $skuMemTypes.Count; $m ++) {
 
             # // If a match is found exit
-            if ($MatchFile[$i].MemoryGB -eq $skuMemTypes[$c].Memory) { break }
-            # // If a match is not found display mem size
-            if ($c -eq ($skuMemTypes.Count - 1)) { $MatchFile[$i].MemoryGB}
+            if ($MatchFile[$i].MemoryGB -eq $skuMemTypes[$m].Memory) { break }
+
+            # // If there is no exact match round up to the next memory value
+            If (($MatchFile[$i].MemoryGB - $skuMemTypes[$m].Memory) -lt 0) { $MatchFile[$i].MemoryGB = $skuMemTypes[$m].Memory ; break }
+
+        
+        }
+        # // Loop through all memory SKUs looking for a match
+        for ($m = 0; $m -lt $skuMemTypes.Count; $m ++) {
+
+            # // If a match is found exit
+            if ($MatchFile[$i].MemoryGB -eq $skuMemTypes[$m].Memory) { break }
+
+            # // If there is no exact match round up to the next memory value
+            If (($MatchFile[$i].MemoryGB - $skuMemTypes[$m].Memory) -lt 0) { $MatchFile[$i].MemoryGB = $skuMemTypes[$m].Memory ; break }
 
         }
+
+        # // Loop through all vCPU SKUs looking for a match
+        for ($c = 0; $c -lt $skuCPUTypes.Count; $c ++) {
+
+            # // If a match is found exit
+            if ($MatchFile[$i].CPUs -eq $skuCPUTypes[$c].vCPU) { break }
+
+            # // If there is no exact match round up to the next vCPU value
+            If (($MatchFile[$i].CPUs - $skuCPUTypes[$c].vCPU) -lt 0) { $MatchFile[$i].CPUs = $skuCPUTypes[$c].vCPU ; break }
+
+        }
+
     }
 }
 
