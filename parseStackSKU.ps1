@@ -1,11 +1,8 @@
 <#
-
 .SYNOPSIS
     Script to grab existing Azure Stack SKU's and populate them as command line objects.
-
 .DESCRIPTION
     This script will grab the existing published Azure Stack SKU's from the following URL.
-
 .PARAMETER MatchFile
     Specify a CSV file to import and match against Azure Stack SKUs. The columns in the file
     need to follow this naming convention, but they do not need to be in a specific order:
@@ -19,12 +16,10 @@
 
 .PARAMETER Match2008
     Switch to specify only matching Server 2008 VM instances.
-
 .PARAMETER ForceMatch
     Switch to specify "force match" where VM's will be matched to a SKU regardless if they align
     or not. So as an example a VM with 256GB RAM (larger than anuy single Azure Stack SKU) will
     be matched to the next closest memory matched (128GB) SKU.
-
 .EXAMPLE
     parseStackSKU.ps1
 
@@ -33,33 +28,26 @@
     A full list of objects can be retrieved with the following command.
 
     PS C:\>$skuReport | Get-Member 
-
 .EXAMPLE
     $skuReport | where vCPU -gt 8 | select SKU, vCPU, Memory
 
     Find SKUs greater than 8 vCPU then select SKU Name, vCPU count, and Memory
-
 .EXAMPLE
     $skuReport | where vCPU -le 4 | where Memory -ge 32 | select SKU, vCPU, Memory
 
     Find SKUs less than or equal to 4 vCPU and greater than or equal to 32GB memory
-
 .EXAMPLE
     $skuReport | Measure-Object Memory -Maximum -Minimum -Average 
 
     Display maximum, minimum, and average memory values of all SKUs
-
 .EXAMPLE
     $skuReport | where MaxIOPS -gt 20000 | select SKU, vCPU, Memory, MaxIOPS | sort MaxIOPS -Descending
 
     Search for all systems capable of over 20,000 IOPS, and sort by highest IO SKUs first
-
 .OUTPUTS
     $skuReport
-
 .NOTES
     Plan to add parameters for a few things like -MatchFile to match values in stack to a file.
-
 .LINK
     https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-vm-sizes
 
@@ -67,8 +55,7 @@
 
 [CmdletBinding()]
     Param(
-        [Parameter(Mandatory=$false, HelpMessage="Specify file name to match SKUs against")]
-        [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory=$false)]
         [string]$MatchFile,
 
         [Parameter(Mandatory=$false)]
@@ -79,23 +66,29 @@
 )
 
 # // Import CSV file to match against Azure Stack SKUs
-if ($MatchFile -eq $true) { 
-    
-    $matchFile = Import-Csv $MatchFile
+#if ($MatchFile -ne $null) { $matchFile = Import-Csv $MatchFile }
 
-    }
-
-if ($Match2008 -eq $true) { 
-
-    $MatchFile = $MatchFile | where 'OS according to the VMware Tools' -like '*Server 2008*' | where PowerState -eq 'poweredOn'
-
-}
+# // Find only server 2008 instances
 
 
-Function MatchSKUs {
+Function Get-SKUMatch {
 
-    # // Normalize Values based on switches
-    # // maybe count the matches, if > 2 divide by 2 and pick that sku?
+    param(
+        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        [object]$MatchFile,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        [string]$Match2008,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        [string]$ForceMatch
+
+        )
+
+    $MatchFile = Import-Csv $MatchFile
+    $matchedReport = @()
+
+    if ($Match2008 -eq $true) { $MatchFile = $MatchFile | where 'OS according to the VMware Tools' -like '*Server 2008*' }
 
     # // Convert imported fields for CPU, Memory, Space, and Drive count to integers
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
@@ -108,10 +101,13 @@ Function MatchSKUs {
     }
 
     # // Select unique memory and vCPU SKUs in Azure Stack
-    $skuMemTypes = $skuReport | sort Memory -Unique | select Memory
-    $skuCPUTypes = $skuReport | sort vCPU -Unique | select vCPU
+    $skuMemTypes = ($skuReport | sort Memory -Unique | select Memory).Memory
+    $skuCPUTypes = ($skuReport | sort vCPU -Unique | select vCPU).vCPU
 
-    # // Normalize memory values (round up if no exact match)
+    for ($i = 0; $i -lt $skuMemTypes.Count; $i ++) { $skuMemTypes[$i] = [int]$skuMemTypes[$i] }
+    for ($i = 0; $i -lt $skuCPUTypes.Count; $i ++) { $skuCPUTypes[$i] = [int]$skuCPUTypes[$i] }
+
+    # // Normalize memory and vCPU values (round up if no exact match)
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
 
         # // If force memory match switch is set configure maximum memory to be 128
@@ -121,21 +117,10 @@ Function MatchSKUs {
         for ($m = 0; $m -lt $skuMemTypes.Count; $m ++) {
 
             # // If a match is found exit
-            if ($MatchFile[$i].MemoryGB -eq $skuMemTypes[$m].Memory) { break }
+            if ($MatchFile[$i].MemoryGB -eq $skuMemTypes[$m]) { break }
 
             # // If there is no exact match round up to the next memory value
-            If (($MatchFile[$i].MemoryGB - $skuMemTypes[$m].Memory) -lt 0) { $MatchFile[$i].MemoryGB = $skuMemTypes[$m].Memory ; break }
-
-        
-        }
-        # // Loop through all memory SKUs looking for a match
-        for ($m = 0; $m -lt $skuMemTypes.Count; $m ++) {
-
-            # // If a match is found exit
-            if ($MatchFile[$i].MemoryGB -eq $skuMemTypes[$m].Memory) { break }
-
-            # // If there is no exact match round up to the next memory value
-            If (($MatchFile[$i].MemoryGB - $skuMemTypes[$m].Memory) -lt 0) { $MatchFile[$i].MemoryGB = $skuMemTypes[$m].Memory ; break }
+            If (($MatchFile[$i].MemoryGB - $skuMemTypes[$m]) -lt 0) { $MatchFile[$i].MemoryGB = $skuMemTypes[$m] ; break }
 
         }
 
@@ -143,14 +128,64 @@ Function MatchSKUs {
         for ($c = 0; $c -lt $skuCPUTypes.Count; $c ++) {
 
             # // If a match is found exit
-            if ($MatchFile[$i].CPUs -eq $skuCPUTypes[$c].vCPU) { break }
+            if ($MatchFile[$i].CPUs -eq $skuCPUTypes[$c]) { break }
 
             # // If there is no exact match round up to the next vCPU value
-            If (($MatchFile[$i].CPUs - $skuCPUTypes[$c].vCPU) -lt 0) { $MatchFile[$i].CPUs = $skuCPUTypes[$c].vCPU ; break }
+            If (($MatchFile[$i].CPUs - $skuCPUTypes[$c]) -lt 0) { $MatchFile[$i].CPUs = $skuCPUTypes[$c] ; break }
 
         }
-
     }
+
+    # // Match normalized vCPU and memory VM's to Azure Stack SKUs
+    $customerMemTypes = ($MatchFile | Group-Object MemoryGB | Select-Object Name).Name | Sort-Object
+    
+    for ($i = 0; $i -lt $customerMemTypes.Count; $i ++) { $customerMemTypes[$i] = [int]$customerMemTypes[$i] }
+    $customerMemTypes = $customerMemTypes | Sort-Object
+
+    # // Loop through all memory types in customer environment
+    foreach ($memType in $customerMemTypes) {
+
+        # // Build a list of all CPU counts with this amount of memory
+        $cpuMemList = $MatchFile | where MemoryGB -eq $memType | Group-Object CPUs  | sort Name | select Count, Name
+
+        # // Loop through each CPU in the list matching CPU and memory count
+        foreach ($cpu in $cpuMemList) {
+
+            # // Match the current CPU + Memory to an Azure Stack SKU
+            $skuMatches = $skuReport | where vCPU -eq $cpu.Name | where Memory -eq $memType
+
+            # // Find current array position for Azure Stack CPU SKU
+            $cpuTry = [array]::indexOf($skuCPUTypes, [int]$cpu.Name)
+
+            do {
+
+                # // Increment search position in array by until we find a matched vCPU + memory SKU
+                $cpuTry ++
+
+                $skuMatches = $skuReport | where vCPU -eq $skuCPUTypes[$cpuTry] | where Memory -eq $memType
+                Write-Host "Current: $skuMatches"
+                $cpuTry
+    
+            }
+            while ($null -eq $skuMatches)
+    
+            # // If there is more than 1 SKU that matches pick the one in the middle
+            if ($skuMatches.Count -gt 1) { 
+                $skuMatch = $skuMatches[($skuMatches.Count / 2)] 
+            }
+            else { $skuMatch = $skuMatches }
+    
+            $vmMatchObj = New-Object System.Object
+            $vmMatchObj | Add-Member -NotePropertyName Qty -NotePropertyValue $cpu.Count
+            $vmMatchObj | Add-Member -NotePropertyName SKU -NotePropertyValue $skuMatch.SKU
+    
+            $matchedReport += $vmMatchObj
+
+        }
+    }
+
+    return $matchedReport
+    
 }
 
 Function ConvertTo-NormalHTML {
@@ -187,6 +222,7 @@ $tables = @($stackHTML.getElementsByTagName('TABLE'))
 
 $titles = @()
 $global:skuReport = @()
+$global:matchedReport = @()
 
 # // Loop through all tables in HTML
 foreach ($table in $tables) {
@@ -264,6 +300,8 @@ foreach ($table in $tables) {
 
     }
 }
+
+if ($MatchFile -ne '') { $global:matchedReport = Get-SkuMatch $MatchFile $ForceMatch $Match2008 }
 
 Write-Host ' '
 Write-Host 'Success: To see what to do next type: help .\parseStackSKU.ps1 -ex'
