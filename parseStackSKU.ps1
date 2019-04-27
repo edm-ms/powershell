@@ -2,29 +2,38 @@
 .SYNOPSIS
     Script to grab existing Azure Stack SKU's and populate them as command line objects.
 .DESCRIPTION
-    This script will grab the existing published Azure Stack SKU's from the following URL.
+    This script will grab the existing published Azure Stack SKU's from a URL
 .PARAMETER MatchFile
     Specify a CSV file to import and match against Azure Stack SKUs. The columns in the file
     need to follow this naming convention, but they do not need to be in a specific order:
 
-    Name, vCPU, Memory, Space
+    Name, CPU, RAM, SpaceGB
 
     Name = VM Name
     CPU = Count of vCPU's
     RAM = Memory in GB
-    Space = Drive space assigned to VM
+    SpaceGB = Drive space assigned to VM
 
 .PARAMETER Match2008
     Switch to specify only matching Server 2008 VM instances.
 .PARAMETER PreferCPU
+    [Note: Not Currently Implemented]
+
     Switch to prefer matching SKU to CPU if there is no exact match. The default behavior is to
     match memory. Example, customer CPU count is 4 with 4GB RAM. Since there is no SKU of this
     type the default behavior would match a 2CPU system with 4GB RAM. With this switch the set
     the match would be a 4CPU w 8GB RAM.
-.PARAMETER ForceMatch
-    Switch to specify "force match" where VM's will be matched to a SKU regardless if they align
-    or not. So as an example a VM with 256GB RAM (larger than anuy single Azure Stack SKU) will
-    be matched to the next closest memory matched (128GB) SKU.
+.PARAMETER MaxMem
+    Switch to specify VM's with more than 128GB memory (current Azure Stack Maximum SKU size)
+    will be downsize to 128GB
+.PARAMETER RoundUp
+    Switch to round up CPU and Memory if there are no matching SKUs. The default behavior is to
+    find the closest number match.
+.EXAMPLE
+    parseStackSKU.ps1 -MatchFile .\input.csv -Match2008 -MaxMem
+
+    Finds all Azure Stack SKUs and then matches the data to an input file, only Server 2008, and
+    sets matching for systems greater than 128GB RAM = 128GB RAM
 .EXAMPLE
     parseStackSKU.ps1
 
@@ -41,14 +50,9 @@
     $skuReport | where MaxIOPS -gt 20000 | select SKU, vCPU, Memory, MaxIOPS | sort MaxIOPS -Descending
 
     Search for all systems capable of over 20,000 IOPS, and sort by highest IO SKUs first
-.EXAMPLE
-    $skuReport | Measure-Object Memory -Maximum -Minimum -Average 
-
-    Display maximum, minimum, and average memory values of all SKUs
 .OUTPUTS
     $skuReport
-.NOTES
-    Plan to add parameters for a few things like -MatchFile to match values in stack to a file.
+    $matchFile
 .LINK
     https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-vm-sizes
 
@@ -63,8 +67,39 @@
         [switch]$Match2008,
 
         [Parameter(Mandatory=$false)]
-        [switch]$ForceMatch
+        [switch]$MaxMem,
+
+        [Parameter(Mandatory=$false)]
+        [switch]$RoundUp
 )
+
+# // Function to find closest number match
+Function Get-Closest {
+
+    param (
+        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        $numberList,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        $numberToMatch
+    )
+
+    $searchArray = $numberList
+    $searchNumber = $numberToMatch
+    $oldval = $searchNumber - $searchArray[0]
+    $numMatch = $searchArray[0]
+
+    if ($oldval -lt 0) {$oldval = $oldval * -1}
+    $searchArray | foreach { 
+        $val = $searchNumber - $_
+        if($val -lt 0) {$val = $val * -1}
+
+        if ($val -lt $oldval) { 
+            $oldval = $val
+            $numMatch = $_ }
+        }
+    return $numMatch
+}
 
 # // Get-SKUMatch Function to match input file against Azure Stack SKUs
 Function Get-SKUMatch {
@@ -77,8 +112,7 @@ Function Get-SKUMatch {
         [string]$Match2008,
 
         [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
-        [string]$ForceMatch
-
+        [string]$MaxMem
         )
 
     $MatchFile = Import-Csv $MatchFile
@@ -104,8 +138,8 @@ Function Get-SKUMatch {
     # // Normalize memory and vCPU values to match Stack SKUs (round up if no exact match)
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
 
-        # // If force memory match switch is set configure any VM with greater than 128GB memory to = 128GB
-        If ($ForceMatch -eq $true) { If ($MatchFile[$i].RAM -gt 128) { $MatchFile[$i].RAM -eq 128 }  } 
+        # // If MaxMem switch is set configure any VM with greater than 128GB memory to = 128GB
+        If ($MaxMem -eq $true) { If ($MatchFile[$i].RAM -gt 128) { $MatchFile[$i].RAM -eq 128 }  } 
 
         # // Loop through all memory SKUs looking for a match
         for ($m = 0; $m -lt $skuMemTypes.Count; $m ++) {
@@ -113,8 +147,17 @@ Function Get-SKUMatch {
             # // If a match is found exit
             if ($MatchFile[$i].RAM -eq $skuMemTypes[$m]) { break }
 
-            # // If there is no exact match round up to the next memory value
-            If (($MatchFile[$i].RAM - $skuMemTypes[$m]) -lt 0) { $MatchFile[$i].RAM = $skuMemTypes[$m] ; break }
+            # // If RoundUp switch is set roundup memory to next largest SKU, otherwise find closest match
+            if ($RoundUp -eq $true) { 
+
+                # // If there is no exact match round up to the next memory value
+                If (($MatchFile[$i].RAM - $skuMemTypes[$m]) -lt 0) { $MatchFile[$i].RAM = $skuMemTypes[$m] ; break }
+            }
+            else {
+
+                $ramMatch = Get-Closest $skuMemTypes $MatchFile[$i].RAM
+                $MatchFile[$i].RAM = $ramMatch ; break
+            }
         }
 
         # // Loop through all vCPU SKUs looking for a match
@@ -123,8 +166,17 @@ Function Get-SKUMatch {
             # // If a match is found exit
             if ($MatchFile[$i].CPU -eq $skuCPUTypes[$c]) { break }
 
-            # // If there is no exact match round up to the next vCPU value
-            If (($MatchFile[$i].CPU - $skuCPUTypes[$c]) -lt 0) { $MatchFile[$i].CPU = $skuCPUTypes[$c] ; break }
+            # // If RoundUp switch is set roundup CPU to next largest SKU, otherwise find closest match
+            if ($RoundUp -eq $true) { 
+
+                # // If there is no exact match round up to the next CPU value
+                If (($MatchFile[$i].CPU - $skuCPUTypes[$c]) -lt 0) { $MatchFile[$i].CPU = $skuCPUTypes[$c] ; break }
+            }
+            else {
+
+                $cpuMatch = Get-Closest $skuCPUTypes $MatchFile[$i].CPU
+                $MatchFile[$i].CPU = $CPUMatch ; break
+            }
         }
     }
 
@@ -205,6 +257,7 @@ Function Get-SKUMatch {
     return $matchedReport
 }
 
+# // Function to return standard HTML since ParsedHTML property in PowerShell is broken
 Function ConvertTo-NormalHTML {
     param([Parameter(Mandatory = $true, ValueFromPipeline = $true)]$HTML)
 
@@ -309,12 +362,10 @@ foreach ($table in $tables) {
     }
 }
 
-
-
 # // If the matchfile switch is set call function to match VM to SKUs
 if ($MatchFile -ne '') { 
 
-    $global:matchedReport = Get-SkuMatch $MatchFile $ForceMatch $Match2008
+    $global:matchedReport = Get-SkuMatch $MatchFile $MaxMem $Match2008
 
     # // Display SKU matches and average drive space
     $matchedReport | group SKU | sort name | select Name, Count
