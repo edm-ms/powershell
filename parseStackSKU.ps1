@@ -7,12 +7,14 @@
     Specify a CSV file to import and match against Azure Stack SKUs. The columns in the file
     need to follow this naming convention, but they do not need to be in a specific order:
 
-    Name, CPU, RAM, SpaceGB
+    Name, CPU, RAM, SpaceGB, OS, PowerState
 
     Name = VM Name
     CPU = Count of vCPU's
     RAM = Memory in GB
-    SpaceGB = Drive space assigned to VM
+    SpaceGB = Drive space assigned to VM in GB
+    OS = OS Type/Name, i.e. Microsoft Windows Server 2008
+    PowerState = poweredOn or poweredOff
 
 .PARAMETER Match2008
     Switch to specify only matching Server 2008 VM instances.
@@ -26,6 +28,8 @@
 .PARAMETER MaxMem
     Switch to specify VM's with more than 128GB memory (current Azure Stack Maximum SKU size)
     will be downsize to 128GB
+.PARAMETER OnlyOn
+    Switch to only match VM's that are powered on
 .PARAMETER RoundUp
     Switch to round up CPU and Memory if there are no matching SKUs. The default behavior is to
     find the closest number match.
@@ -70,6 +74,9 @@
         [switch]$MaxMem,
 
         [Parameter(Mandatory=$false)]
+        [switch]$OnlyOn,
+
+        [Parameter(Mandatory=$false)]
         [switch]$RoundUp
 )
 
@@ -112,6 +119,12 @@ Function Get-SKUMatch {
         [string]$Match2008,
 
         [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        [string]$PoweredOn,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        [string]$RoundUp,
+
+        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
         [string]$MaxMem
         )
 
@@ -119,7 +132,8 @@ Function Get-SKUMatch {
     $matchedReport = @()
     $matchedVM = @()
 
-    if ($Match2008 -eq $true) { $MatchFile = $MatchFile | where 'OS according to the VMware Tools' -like '*Server 2008*' }
+    if ($Match2008 -eq $true) { $MatchFile = $MatchFile | where 'OS' -like '*Server 2008*' }
+    if ($OnlyOn -eq $true) { $MatchFile = $MatchFile | where 'PowerState' -eq 'poweredOn' }
 
     # // Convert imported fields for CPU, Memory, Space, and Drive count to integers
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
@@ -249,7 +263,7 @@ Function Get-SKUMatch {
         $vmMatchObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
         $vmMatchObj | Add-Member -NotePropertyName CPU -NotePropertyValue $vm.CPU
         $vmMatchObj | Add-Member -NotePropertyName RAM -NotePropertyValue $vm.RAM
-        $vmMatchObj | Add-Member -NotePropertyName Space -NotePropertyValue $vm.SpaceGB
+        $vmMatchObj | Add-Member -NotePropertyName SpaceGB -NotePropertyValue $vm.SpaceGB
         $vmMatchObj | Add-Member -NotePropertyName SKU -NotePropertyValue $skuMatch.SKU
 
         $matchedReport += $vmMatchObj
@@ -365,11 +379,11 @@ foreach ($table in $tables) {
 # // If the matchfile switch is set call function to match VM to SKUs
 if ($MatchFile -ne '') { 
 
-    $global:matchedReport = Get-SkuMatch $MatchFile $MaxMem $Match2008
+    $global:matchedReport = Get-SkuMatch $MatchFile $MaxMem $Match2008 $RoundUp $OnlyOn
 
     # // Display SKU matches and average drive space
     $matchedReport | group SKU | sort name | select Name, Count
-    $averageDrive = [int]($matchedReport | Measure-Object Space -Average | select Average).Average
+    $averageDrive = [int]($matchedReport | Measure-Object SpaceGB -Average | select Average).Average
     Write-Host ' '
     Write-Host 'Average Drive Space/SKU: ' $averageDrive 'GB'
     Write-Host ' '
