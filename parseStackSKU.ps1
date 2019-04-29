@@ -64,19 +64,16 @@
 
 [CmdletBinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory=$false, Position=0)]
         [string]$MatchFile,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory=$false, Position=1)]
         [switch]$Match2008,
 
-        [Parameter(Mandatory=$false)]
-        [switch]$MaxMem,
-
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory=$false, Position=2)]
         [switch]$OnlyOn,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory=$false, Position=3)]
         [switch]$RoundUp
 )
 
@@ -97,14 +94,20 @@ Function Get-Closest {
     $numMatch = $searchArray[0]
 
     if ($oldval -lt 0) {$oldval = $oldval * -1}
-    $searchArray | foreach { 
-        $val = $searchNumber - $_
+
+    foreach ($number in $searchArray){
+
+        $val = $searchNumber - $number
+
         if($val -lt 0) {$val = $val * -1}
 
         if ($val -lt $oldval) { 
+
             $oldval = $val
-            $numMatch = $_ }
+            $numMatch = $number 
         }
+    }
+
     return $numMatch
 }
 
@@ -112,20 +115,17 @@ Function Get-Closest {
 Function Get-SKUMatch {
 
     param(
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, Position=0)]
         [object]$MatchFile,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, Position=1)]
         [string]$Match2008,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
-        [string]$PoweredOn,
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, Position=2)]
+        [string]$OnlyOn,
 
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
-        [string]$RoundUp,
-
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true)]
-        [string]$MaxMem
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, Position=3)]
+        [string]$RoundUp
         )
 
     $MatchFile = Import-Csv $MatchFile
@@ -142,14 +142,13 @@ Function Get-SKUMatch {
         $MatchFile[$i].RAM = [int]$MatchFile[$i].RAM
         $MatchFile[$i].SpaceGB = [int]$MatchFile[$i].SpaceGB
         #$MatchFile[$i].Disks = [int]$MatchFile[$i].Disks
-        
     }
 
     # // Select unique memory and vCPU SKUs in Azure Stack
     $skuMemTypes = ($skuReport | sort Memory -Unique | select Memory).Memory
     $skuCPUTypes = ($skuReport | sort vCPU -Unique | select vCPU).vCPU
 
-    # // Normalize memory and vCPU values to match Stack SKUs (round up if no exact match)
+    # // Normalize memory and vCPU values to match Stack SKUs
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
 
         # // If MaxMem switch is set configure any VM with greater than 128GB memory to = 128GB
@@ -379,7 +378,7 @@ foreach ($table in $tables) {
 # // If the matchfile switch is set call function to match VM to SKUs
 if ($MatchFile -ne '') { 
 
-    $global:matchedReport = Get-SkuMatch $MatchFile $MaxMem $Match2008 $RoundUp $OnlyOn
+    $global:matchedReport = Get-SkuMatch $MatchFile $Match2008 $OnlyOn $RoundUp 
 
     # // Display SKU matches and average drive space
     $matchedReport | group SKU | sort name | select Name, Count
