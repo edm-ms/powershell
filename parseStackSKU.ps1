@@ -25,9 +25,6 @@
     match memory. Example, customer CPU count is 4 with 4GB RAM. Since there is no SKU of this
     type the default behavior would match a 2CPU system with 4GB RAM. With this switch the set
     the match would be a 4CPU w 8GB RAM.
-.PARAMETER MaxMem
-    Switch to specify VM's with more than 128GB memory (current Azure Stack Maximum SKU size)
-    will be downsize to 128GB
 .PARAMETER OnlyOn
     Switch to only match VM's that are powered on
 .PARAMETER RoundUp
@@ -54,6 +51,8 @@
     $skuReport | where MaxIOPS -gt 20000 | select SKU, vCPU, Memory, MaxIOPS | sort MaxIOPS -Descending
 
     Search for all systems capable of over 20,000 IOPS, and sort by highest IO SKUs first
+.NOTES
+    Need to rebuild output object to show matched file original inputs vs. the Azure Stack SKU it maps to...
 .OUTPUTS
     $skuReport
     $matchFile
@@ -150,9 +149,6 @@ Function Get-SKUMatch {
 
     # // Normalize memory and vCPU values to match Stack SKUs
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
-
-        # // If MaxMem switch is set configure any VM with greater than 128GB memory to = 128GB
-        If ($MaxMem -eq $true) { If ($MatchFile[$i].RAM -gt 128) { $MatchFile[$i].RAM -eq 128 }  } 
 
         # // Loop through all memory SKUs looking for a match
         for ($m = 0; $m -lt $skuMemTypes.Count; $m ++) {
