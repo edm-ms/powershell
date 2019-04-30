@@ -34,19 +34,22 @@ catch {
 
 # //	Set script variables
 $allRGNics = @()
+$rgNameSearch = 'citrix-xd*'
+$albName = 'LB-US-Central-01'
+$albRG = 'citrix-xd-sdsds'
+$albBackEndName = 'Default-Outbound'
 
 # // Grab load balancer information
-$myALB = Get-AzLoadBalancer -Name 'LB-US-Central-01' -ResourceGroupName 'citrix-xd-sdsds'
-$backend = Get-AzLoadBalancerBackendAddressPoolConfig -name 'Default-Outbound' -LoadBalancer $myALB
+$myALB = Get-AzLoadBalancer -Name $albName -ResourceGroupName $albRG
+$backend = Get-AzLoadBalancerBackendAddressPoolConfig -name $albBackEndName -LoadBalancer $myALB
 
 # // Grab all resource groups starting with 'citrix-xd'
-$allRGs = Get-AzResourceGroup | Where-Object ResourceGroupName -Like 'citrix-xd-*'
+$allRGs = Get-AzResourceGroup | Where-Object ResourceGroupName -Like $rgNameSearch
 
 # // Loop through all matched resource groups and find all NIC's
 foreach ($rg in $allRGs) {
 
     $allRGNics += Get-AzNetworkInterface -ResourceGroupName $rg.ResourceGroupName
-
 }
 
 # // Loop through all matched NICs and add them to the load balancer back-end
