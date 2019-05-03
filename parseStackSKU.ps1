@@ -127,12 +127,17 @@ Function Get-SKUMatch {
         [string]$RoundUp
         )
 
-    $MatchFile = Import-Csv $MatchFile
+    $fileLocation = $MatchFile
+    $MatchFile = Import-Csv $fileLocation
+    $beforMatch = Import-Csv $fileLocation
     $matchedReport = @()
     $matchedVM = @()
 
     if ($Match2008 -eq $true) { $MatchFile = $MatchFile | where 'OS' -like '*Server 2008*' }
     if ($OnlyOn -eq $true) { $MatchFile = $MatchFile | where 'PowerState' -eq 'poweredOn' }
+
+    $beforMatch = $beforMatch | where 'OS' -like '*Server 2008*'
+    $beforMatch = $beforMatch | where 'PowerState' -eq 'poweredOn' 
 
     # // Convert imported fields for CPU, Memory, Space, and Drive count to integers
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
@@ -140,6 +145,10 @@ Function Get-SKUMatch {
         $MatchFile[$i].CPU = [int]$MatchFile[$i].CPU
         $MatchFile[$i].RAM = [int]$MatchFile[$i].RAM
         $MatchFile[$i].SpaceGB = [int]$MatchFile[$i].SpaceGB
+
+        $beforMatch[$i].CPU = [int]$beforMatch[$i].CPU
+        $beforMatch[$i].RAM = [int]$beforMatch[$i].RAM
+        $beforMatch[$i].SpaceGB = [int]$beforMatch[$i].SpaceGB
         #$MatchFile[$i].Disks = [int]$MatchFile[$i].Disks
     }
 
@@ -168,7 +177,6 @@ Function Get-SKUMatch {
                 $MatchFile[$i].RAM = $ramMatch ; break
             }
         }
-
         # // Loop through all vCPU SKUs looking for a match
         for ($c = 0; $c -lt $skuCPUTypes.Count; $c ++) {
 
@@ -216,7 +224,6 @@ Function Get-SKUMatch {
                     break
                 }
             }
-
             # // Set CPU to next SKU size up if found, otherwise set the CPU to the next SKU with less CPU
             if ($foundCPU -eq $true) {
 
@@ -230,7 +237,6 @@ Function Get-SKUMatch {
                 $MatchFile[$counter].CPU = $availalbleCPUMatch[$cpuChoice].vCPU
                 $matchedVM += $MatchFile[$counter]
             }
-
         }
         else { 
 
@@ -239,6 +245,7 @@ Function Get-SKUMatch {
     }
 
     # // Build SKU matches
+    $i = 0
     foreach ($vm in $matchedVM) {
 
         # Try to match v2 SKUs
@@ -258,10 +265,13 @@ Function Get-SKUMatch {
         $vmMatchObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
         $vmMatchObj | Add-Member -NotePropertyName CPU -NotePropertyValue $vm.CPU
         $vmMatchObj | Add-Member -NotePropertyName RAM -NotePropertyValue $vm.RAM
+        $vmMatchObj | Add-Member -NotePropertyName OriginalCPU -NotePropertyValue $beforMatch[$i].CPU
+        $vmMatchObj | Add-Member -NotePropertyName OriginalRam -NotePropertyValue $beforMatch[$i].RAM
         $vmMatchObj | Add-Member -NotePropertyName SpaceGB -NotePropertyValue $vm.SpaceGB
         $vmMatchObj | Add-Member -NotePropertyName SKU -NotePropertyValue $skuMatch.SKU
 
         $matchedReport += $vmMatchObj
+        $i ++
     }
     return $matchedReport
 }
@@ -285,7 +295,6 @@ Function ConvertTo-NormalHTML {
         return $NormalHTML
     }
 }
-
 # // Allow PowerShell to use different TLS versions
 [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls" 
 
@@ -305,9 +314,7 @@ foreach ($table in $tables) {
     $rows = @($table.Rows)
 
     # // Loop through all rows in current table
-    foreach($row in $rows)
-
-    {
+    foreach($row in $rows) {
 
         # // Grab all cells in current row
         $cells = @($row.Cells)
@@ -366,7 +373,6 @@ foreach ($table in $tables) {
                 $counter ++
             }
         }
-
         $global:skuReport += $skuObj
     }
 }
@@ -383,7 +389,6 @@ if ($MatchFile -ne '') {
     Write-Host 'Average Drive Space/SKU: ' $averageDrive 'GB'
     Write-Host ' '
 }
-
 else {
     
     Write-Host ' '
