@@ -15,11 +15,11 @@ $mn = 0 # // Memory Normalization Loop
 $ll = 0 # Logic Loop
 $iL = 0 # Integer convert loop
 
-$driveSKUs = @(1, 32, 64, 128, 256, 512, 1024, 2048, 4096)
+$driveSKUs = @(1, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32767)
 
 $asrMaxDriveSize = 4096
-$osExclusions = @('', '*Router*', '*BSD*', '*Windows XP*', '*Windows 7*', '*Windows 8*', '*Windows 10*')
-$clientVMExclusions = Get-Content 'C:\Users\ermoor\git\powershell\exclude.txt'
+$osExclusions = @('', '*Router*', '*BSD*', '*Windows XP*')
+$clientVMExclusions = Get-Content 'C:\vmexclusion.txt'
 
 $vmToMatch = @()
 $memMatch = @()
@@ -41,10 +41,9 @@ Do {
 
 foreach ($vm in $dcReport) {
 
-     If ($vm.Drives.Values -gt $asrMaxDriveSize) { 
-         
-        #$vmExclusions += $vm.Name  
-        
+    # // VM's that have drives larger than what ASR supports
+    if ($vm.Drives.Values -gt $asrMaxDriveSize) { 
+
         $vmExcludeObj = New-Object System.Object
         $vmExcludeObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
         $vmExcludeObj | Add-Member -NotePropertyName Reason -NotePropertyValue 'Drive(s) > 4TB not supported by ASR'
@@ -53,16 +52,27 @@ foreach ($vm in $dcReport) {
         $vmExclusions += $vmExcludeObj
     
     }
-     
-}
-     
-foreach ($vm in $dcReport) {
 
-    # $vmExclusions += ($dcReport | where OS -Like $vm | select Name).Name
+    foreach ($clientExclusion in $clientVMExclusions) {
+
+        # // VM's that are in the client exclusion file
+        if ($vm.Name -eq $clientExclusion) {
+
+            $vmExcludeObj = New-Object System.Object
+            $vmExcludeObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
+            $vmExcludeObj | Add-Member -NotePropertyName Reason -NotePropertyValue 'Client Exclusion'
+            $vmExcludeObj | Add-Member -NotePropertyName Value -NotePropertyValue $vm.OS
+    
+            $vmExclusions += $vmExcludeObj
+
+        }
+
+    }
 
     foreach ($os in $osExclusions) {
 
-        If (($vm | where OS -Like $os | select Name).Name -ne $null) {
+        # // VM's that have an unsupported OS
+        if (($vm | where OS -Like $os | select Name).Name -ne $null) {
 
             $vmExcludeObj = New-Object System.Object
             $vmExcludeObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
@@ -71,30 +81,9 @@ foreach ($vm in $dcReport) {
     
             $vmExclusions += $vmExcludeObj
 
-            }
         }
-
     }
-
-    foreach ($vm in $dcReport) {
-
-        # $vmExclusions += ($dcReport | where OS -Like $vm | select Name).Name
-    
-        foreach ($item in $clientVMExclusions) {
-    
-            If ($vm.Name -eq $item) {
-    
-                $vmExcludeObj = New-Object System.Object
-                $vmExcludeObj | Add-Member -NotePropertyName Name -NotePropertyValue $vm.Name
-                $vmExcludeObj | Add-Member -NotePropertyName Reason -NotePropertyValue 'Client Exclusion'
-                $vmExcludeObj | Add-Member -NotePropertyName Value -NotePropertyValue $vm.OS
-        
-                $vmExclusions += $vmExcludeObj
-    
-                }
-            }
-    
-        }
+}
 
 $vmToMatch += ($dcReport | where Name -NotIn $vmExclusions.Name)
 
@@ -172,8 +161,6 @@ foreach ($cpuMatch in $cpuCountType) {
 
 }
 
-
-
 $i = 1
 $driveSizesInt = @()
 $vmToMatch.TotalSpace | % { $driveSizesInt += [int]$_ }
@@ -194,7 +181,6 @@ foreach ($drive in $driveSKUs) {
 
     }
     
-
     $driveObj = New-Object System.Object
     $driveObj | Add-Member -NotePropertyName Size -NotePropertyValue $driveSKUs[$i]
     $driveObj | Add-Member -NotePropertyName Qty -NotePropertyValue $driveQTY
@@ -207,4 +193,3 @@ foreach ($drive in $driveSKUs) {
 
 $matchedSKUs = $matchedSKUs | Sort-Object qty -Descending
 $matchedSKUs | Select-Object Qty, SKU
-

@@ -48,7 +48,7 @@ $allRGs = Get-AzResourceGroup | Where-Object ResourceGroupName -Like $rgNameSear
 
 # // Loop through all matched resource groups and find all NIC's
 foreach ($rg in $allRGs) {
-
+    
     $allRGNics += Get-AzNetworkInterface -ResourceGroupName $rg.ResourceGroupName
 }
 

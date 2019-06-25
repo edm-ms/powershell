@@ -1,2 +1,12 @@
 vmlist.csv
 exclude.txt
+ddc.csv
+vmexclusion.csv
+vmexclusion.txt
+adc.csv
+ddcSKUMatch.csv
+ddcBeforeAfter.csv
+adcSKUMatch.csv
+PT1H.json
+adcStack.csv
+ddcStack.csv
