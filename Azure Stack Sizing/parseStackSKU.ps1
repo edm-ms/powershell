@@ -133,11 +133,14 @@ Function Get-SKUMatch {
     $matchedReport = @()
     $matchedVM = @()
 
-    if ($Match2008 -eq $true) { $MatchFile = $MatchFile | where 'OS' -like '*Server 2008*' }
-    if ($OnlyOn -eq $true) { $MatchFile = $MatchFile | where 'PowerState' -eq 'poweredOn' }
-
-    $beforMatch = $beforMatch | where 'OS' -like '*Server 2008*'
-    $beforMatch = $beforMatch | where 'PowerState' -eq 'poweredOn' 
+    if ($Match2008 -eq $true) { 
+        $MatchFile = $MatchFile | where 'OS' -like '*Server 2008*' 
+        $beforMatch = $beforMatch | where 'OS' -like '*Server 2008*'
+        }
+    if ($OnlyOn -eq $true) { 
+        $MatchFile = $MatchFile | where 'PowerState' -eq 'poweredOn' 
+        $beforMatch = $beforMatch | where 'PowerState' -eq 'poweredOn' 
+        }
 
     # // Convert imported fields for CPU, Memory, Space, and Drive count to integers
     for ($i = 0; $i -lt $MatchFile.Count; $i ++) {
@@ -387,6 +390,8 @@ if ($MatchFile -ne '') {
     $averageDrive = [int]($matchedReport | Measure-Object SpaceGB -Average | select Average).Average
     Write-Host ' '
     Write-Host 'Average Drive Space/SKU: ' $averageDrive 'GB'
+    Write-Host ' '
+    Write-Host 'explore with the object $matchedReport and $skuReport'
     Write-Host ' '
 }
 else {
