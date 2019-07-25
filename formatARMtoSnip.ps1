@@ -50,5 +50,4 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
     Else {
         $global:newSnippet += '"' + $inputFile[$i] + '",'
     }
-
 }
