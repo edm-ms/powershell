@@ -1,18 +1,12 @@
-vmlist.csv
-exclude.txt
-ddc.csv
-vmexclusion.csv
-vmexclusion.txt
-adc.csv
-ddcSKUMatch.csv
-ddcBeforeAfter.csv
-adcSKUMatch.csv
 PT1H.json
-adcStack.csv
-ddcStack.csv
+Azure Stack Sizing/ddc.csv
 Azure Stack Sizing/allenv.csv
-armSample.json
+Azure Stack Sizing/adc.csv
 .vscode/launch.json
-.gitignore
+vmexclusion.txt
+vmexclusion.csv
+ddcStack.csv
 snippetSample.json
+armSample.json
+adcStack.csv
 .gitignore
