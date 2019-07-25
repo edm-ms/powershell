@@ -11,3 +11,8 @@ PT1H.json
 adcStack.csv
 ddcStack.csv
 Azure Stack Sizing/allenv.csv
+armSample.json
+.vscode/launch.json
+.gitignore
+snippetSample.json
+.gitignore

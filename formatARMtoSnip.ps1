@@ -1,5 +1,15 @@
 $inputFile = Get-Content .\armSample.json
+$global:newSnippet = @()
 
+# // Header data:
+#"Name of thing": {
+#    "prefix": "arm-resource",
+#    "body": [
+
+# // Footer data:
+#],
+#"description": "Description of thing"
+#},
 
 For ($i = 0; $i -lt $inputFile.Length; $i ++) {
 
@@ -7,12 +17,12 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
 
         $armElements = $inputFile[$i].Split('"')
 
-        # // Loop through all elements 
+        # // Loop through all elements and format the specific pieces
         For ($c = 1; $c -lt $armElements.Length; $c ++) {
 
             if ($armElements[$c].Contains(':')) { 
 
-                if ($armElements[$c].Contains('{')) {
+                if ($armElements[$c].Contains('{') -or $armElements[$c].Contains('[')) {
                     $armElements[$c] = $armElements[$c] + '",'
                 }
                 else {
@@ -34,14 +44,11 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
                 }
             }
         }
-        
-        $snippetFix = '"' + $armElements
-        Write-Host $snippetFix
+        $global:newSnippet += '"' + $armElements
     }
 
     Else {
-        $snippetFix = '"' + $inputFile[$i] + '",'
-        Write-Host $snippetFix
+        $global:newSnippet += '"' + $inputFile[$i] + '",'
     }
 
 }
