@@ -5,16 +5,17 @@
     "variables": {},
     "resources": [
         {
-            "name": "containerRegistry1",
-            "type": "Microsoft.ContainerRegistry/registries",
-            "apiVersion": "2017-10-01",
+            "name": "firewall1",
+            "type": "Microsoft.Network/azureFirewalls",
+            "apiVersion": "2019-04-01",
             "location": "[resourceGroup().location]",
-            "sku": {
-                "name": "Classic"
-            },
+            "tags": {},
             "properties": {
-                "adminUserEnabled": true
-            }
+               "applicationRuleCollections": [],
+               "natRuleCollections": [],
+               "networkRuleCollections": [],
+               "ipConfigurations": []
+             }
         }
     ],
     "outputs": {}

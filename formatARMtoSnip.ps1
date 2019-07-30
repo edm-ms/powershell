@@ -1,4 +1,27 @@
-$inputFile = Get-Content .\armSample.json
+#param (
+#    [Parameter(Position=1, Mandatory=$true, HelpMessage="Specify ARM JSON file to inport.")]
+#    [string]$inputFile
+
+#    )
+
+#try {
+
+#    if ($inputFile -eq $null) {
+
+#        throw 'Empty or missing input file!'
+        
+#    }
+
+#    $inputFile = Get-Content $inputFile
+
+#}
+#catch {
+
+#    Write-Error $_
+
+#}
+
+$inputFile = Get-Content .\snippetSample.json
 $global:newSnippet = @()
 
 # // Header data:
