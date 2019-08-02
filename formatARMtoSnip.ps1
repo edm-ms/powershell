@@ -40,6 +40,7 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
 
         $armElements = $inputFile[$i].Split('"')
 
+        #$armElements[0] = $armElements[0].Trim()
         # // Loop through all elements and format the specific pieces
         For ($c = 1; $c -lt $armElements.Length; $c ++) {
 
@@ -49,7 +50,9 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
                     $armElements[$c] = $armElements[$c] + '",'
                 }
                 else {
-                    $armElements[$c] = $armElements[$c]
+
+                    # // Add space after colon
+                    $armElements[$c] = $armElements[$c] + ' '
                 }
             }
             else {
@@ -62,11 +65,13 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
                         $armElements[$c] = $armElements[$c] + '",'
                     }
                     else {
+                        # // Add opening and closing \ with "" to an element that is not a ': , { }'
                         $armElements[$c] = '\"' + $armElements[$c] + '\"'
                     }
                 }
             }
         }
+        $armElements = $armElements -join ''
         $global:newSnippet += '"' + $armElements
     }
 
@@ -74,3 +79,5 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
         $global:newSnippet += '"' + $inputFile[$i] + '",'
     }
 }
+
+$global:newSnippet | clip
