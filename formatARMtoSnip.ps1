@@ -1,38 +1,10 @@
-#param (
-#    [Parameter(Position=1, Mandatory=$true, HelpMessage="Specify ARM JSON file to inport.")]
-#    [string]$inputFile
-
-#    )
-
-#try {
-
-#    if ($inputFile -eq $null) {
-
-#        throw 'Empty or missing input file!'
-        
-#    }
-
-#    $inputFile = Get-Content $inputFile
-
-#}
-#catch {
-
-#    Write-Error $_
-
-#}
-
-$inputFile = Get-Content .\snippetSample.json
+$inputFile = Get-Clipboard 
 $global:newSnippet = @()
 
-# // Header data:
-#"Name of thing": {
-#    "prefix": "arm-resource",
-#    "body": [
 
-# // Footer data:
-#],
-#"description": "Description of thing"
-#},
+$global:newSnippet += '"My New Snippet": {'
+$global:newSnippet += '"prefix": "myarm-newsnipp",'
+$global:newSnippet += '"body": ['
 
 For ($i = 0; $i -lt $inputFile.Length; $i ++) {
 
@@ -46,7 +18,7 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
 
             if ($armElements[$c].Contains(':')) { 
 
-                if ($armElements[$c].Contains('{') -or $armElements[$c].Contains('[')) {
+                if ($armElements[$c].Contains('{') -or $armElements[$c].Contains('[') -or $armElements[$c].Contains('true') -or $armElements[$c].Contains('false')) {
                     $armElements[$c] = $armElements[$c] + '",'
                 }
                 else {
@@ -79,5 +51,9 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
         $global:newSnippet += '"' + $inputFile[$i] + '",'
     }
 }
+
+$global:newSnippet += '],'
+$global:newSnippet += '"description": "Description of thing"'
+$global:newSnippet += '},'
 
 $global:newSnippet | clip
