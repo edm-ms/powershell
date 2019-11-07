@@ -35,6 +35,6 @@ $allVMs = $allVMs.Value
 # Loop through all VM's and power off all VMs that were off before update
 ForEach ($vm in $allVMs) {
 
-    If ($vm.PowerState -ne 'VM running') { Stop-AzVM -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName }
+    If ($vm.PowerState -ne 'VM running') { Stop-AzVM -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName -Confirm $false }
 
 }
