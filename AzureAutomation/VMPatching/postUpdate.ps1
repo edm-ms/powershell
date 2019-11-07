@@ -36,7 +36,7 @@ $allVMs = $allVMs.Value
 ForEach ($vm in $allVMs) {
 
     If ($vm.PowerState -ne 'VM running') { 
-        "Stopping VM: $vm.Name"
+        "Stopping VM: " + $vm.Name
         Stop-AzVM -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName -Force 
     }
 
