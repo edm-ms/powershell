@@ -37,6 +37,9 @@ New-AzAutomationVariable –AutomationAccountName $automationAccountName –Name
 # Loop through all VM's and power on all that are off
 ForEach ($vm in $allVMs) {
 
-    If ($vm.PowerState -ne 'VM running') { Start-AzVM -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName }
+    If ($vm.PowerState -ne 'VM running') { 
+        "Starting VM: $vm.Name"
+        Start-AzVM -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName 
+    }
 
 }
