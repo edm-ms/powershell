@@ -1,49 +1,19 @@
 {
-    "name": "string",
-    "type": "Microsoft.Compute/disks",
-    "apiVersion": "2018-09-30",
-    "location": "string",
-    "tags": {},
-    "sku": {
-      "name": "string"
-    },
-    "zones": [
-      "string"
-    ],
-    "properties": {
-      "osType": "string",
-      "hyperVGeneration": "string",
-      "creationData": {
-        "createOption": "string",
-        "storageAccountId": "string",
-        "imageReference": {
-          "id": "string",
-          "lun": "integer"
+  "type": "Microsoft.Resources/deployments",
+  "apiVersion": "2018-05-01",
+  "name": "asgs",
+  "properties": {
+  "mode": "Incremental",
+  "templateLink": {
+      "uri": "[variables('asgUri')]"
+      },
+  "parameters": {
+      "environment": {
+        "value": "[parameters('environment')]"
         },
-        "sourceUri": "string",
-        "sourceResourceId": "string"
-      },
-      "diskSizeGB": "integer",
-      "encryptionSettingsCollection": {
-        "enabled": "boolean",
-        "encryptionSettings": [
-          {
-            "diskEncryptionKey": {
-              "sourceVault": {
-                "id": "string"
-              },
-              "secretUrl": "string"
-            },
-            "keyEncryptionKey": {
-              "sourceVault": {
-                "id": "string"
-              },
-              "keyUrl": "string"
-            }
-          }
-        ]
-      },
-      "diskIOPSReadWrite": "integer",
-      "diskMBpsReadWrite": "integer"
+      "location": {
+        "value": "[parameters('location')]"
+        }
+      }
     }
-  }
+}
