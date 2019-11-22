@@ -1,7 +1,6 @@
 $inputFile = Get-Clipboard 
 $global:newSnippet = @()
 
-
 $global:newSnippet += '"My New Snippet": {'
 $global:newSnippet += '"prefix": "myarm-newsnipp",'
 $global:newSnippet += '"body": ['
@@ -22,9 +21,14 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
                     $armElements[$c] = $armElements[$c] + '",'
                 }
                 else {
-
-                    # // Add space after colon
-                    $armElements[$c] = $armElements[$c] + ' '
+                    # // If this element is a URL do the following formatting
+                    if ($armElements[$c].Contains('/')) {
+                        $armElements[$c] = '\"' + $armElements[$c] + '\"'
+                    }
+                    else {
+                        # // Add space after colon
+                        $armElements[$c] = $armElements[$c].Trim() + ' '    
+                    }
                 }
             }
             else {
@@ -37,8 +41,17 @@ For ($i = 0; $i -lt $inputFile.Length; $i ++) {
                         $armElements[$c] = $armElements[$c] + '",'
                     }
                     else {
-                        # // Add opening and closing \ with "" to an element that is not a ': , { }'
-                        $armElements[$c] = '\"' + $armElements[$c] + '\"'
+                        # // If there is a $ indicating schema add an extra $ so it does not get removed
+                        if ($armElements[$c].Contains('$')) {
+                            $armElements[$c] = '\"$' + $armElements[$c] + '\"'
+
+                        }
+                        else {
+                            # // Add opening and closing \ with "" to an element that is not a ': , { }'
+                            $armElements[$c] = '\"' + $armElements[$c] + '\"'    
+                        }
+                        
+                        
                     }
                 }
             }
