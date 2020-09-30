@@ -33,7 +33,7 @@ $pauseSeconds = 300
 $allVMs = Get-AzVm -Status
 
 # // Set Azure Automation variable with pre-update VM state
-Set-AzAutomationVariable -Name $automationAccountVariableName -AutomationAccountName $automationAccountName -ResourceGroupName $automationAccountRG -Encrypted $false -Value $allVMs
+Set-AzAutomationVariable -Name $automationAccountVariableName -AutomationAccountName $automationAccountName -ResourceGroupName $automationAccountRG -Encrypted $true -Value $allVMs
 
 # Loop through all VM's and power on all that are off
 ForEach ($vm in $allVMs) {
