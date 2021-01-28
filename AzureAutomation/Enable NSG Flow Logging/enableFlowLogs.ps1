@@ -1,14 +1,46 @@
+# // Start Azure Automation Login Using Service Principal
+$connectionName = "AzureRunAsConnection"
+try
+{
+    # Get the connection "AzureRunAsConnection "
+    $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName         
+
+    "Logging in to Azure..."
+    Connect-AzAccount `
+        -ServicePrincipal `
+        -TenantId $servicePrincipalConnection.TenantId `
+        -ApplicationId $servicePrincipalConnection.ApplicationId `
+        -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+}
+catch {
+    if (!$servicePrincipalConnection)
+    {
+        $ErrorMessage = "Connection $connectionName not found."
+        throw $ErrorMessage
+    } else{
+        Write-Error -Message $_.Exception
+        throw $_.Exception
+    }
+}
+
 # // Set script variables
-$storageAccountName = "nsgflowwestus2" # // Storage account name where flow logs will be collected
-$workspaceName = "Workspace-Name" # // Log Analytics workspace name for Traffic Analytics
-$workspaceGUID = "dd862626-11bd-4d27-8743-3434da6b8b89" # // GUID (workspace ID) of the workspace above
-    
-$storageResource = Get-AzResource -Name $storageAccountName
-$workspace = Get-AzResource -Name $workspaceName -ResourceType Microsoft.OperationalInsights/workspaces
-$storageAccount = Get-AzStorageAccount -Name $storageAccountName -ResourceGroupName $storageResource.ResourceGroupName
-$networkWatchers = Get-AzNetworkWatcher
-$nsgs = Get-AzNetworkSecurityGroup
-    
+$storageAccountId = @{
+    "eastus" = "storageAccountResourceID"
+}
+$workspaceId = "logWorkspaceResourceID"
+$logWorkspace = Get-AzResource -ResourceId $workspaceId
+$retentionDays = 14
+$analyticsInterval = 10 # // processing interval for traffic analytics in minutes 10/60
+$allSubs = Get-AzSubscription
+
+# // Loop through all subscriptions
+foreach ($sub in $allSubs) {
+    Set-AzContext -SubscriptionId $sub.Id | Out-Null
+
+    # // Find network watcher and NSG's in subscription
+    $networkWatchers = Get-AzNetworkWatcher
+    $nsgs = Get-AzNetworkSecurityGroup
+
     # // Loop through all NSGs
     foreach ($nsg in $nsgs) {
         # // Loop through all network watcher instances
@@ -19,9 +51,11 @@ $nsgs = Get-AzNetworkSecurityGroup
                 if ((Get-AzNetworkWatcherFlowLogStatus -NetworkWatcher $nw -TargetResourceId $nsg.id).Enabled -eq 0 ) {
                     Write-Host "Enabling flow logs for NSG:" $nsg.Name
                     Set-AzNetworkWatcherConfigFlowLog -NetworkWatcher $nw -TargetResourceId $nsg.Id `
-                    -StorageAccountId $storageAccount.Id -EnableFlowLog $true -FormatType Json -FormatVersion 2 `
-                    -EnableTrafficAnalytics -WorkspaceResourceId $workspace.Id -WorkspaceGUID $workspaceGUID -WorkspaceLocation $workspace.Location
+                    -StorageAccountId $storageAccountId.($nsg.Location) -EnableFlowLog $true -RetentionInDays $retentionDays -FormatType Json -FormatVersion 2 `
+                    -EnableTrafficAnalytics -TrafficAnalyticsInterval $analyticsInterval -WorkspaceResourceId $workspaceId `
+                    -WorkspaceGUID $logWorkspace.Properties.customerId -WorkspaceLocation $logWorkspace.Location
                 }
             }
         }
     }
+}
