@@ -13,6 +13,7 @@ param (
 # // Import CSV of peering relationships
 $vnets = Import-Csv $inputFile
 $TableId = 'RandomId'
+$vnetIcon = "https://github.com/edm-ms/powershell/raw/main/AzureAutomation/RouteTable/vnetIcon.png"
 
 # // Find unique vnets
 $uniqueVnets = $vnets.SubscriptionID | Select-Object -Unique
@@ -59,7 +60,7 @@ New-HTML -TitleText 'VNet Diagram' -Online -FilePath VNetPeerings.html {
 
                     foreach ($peer in $vnets | Where-Object SubscriptionID -eq $vnet) {
                         
-                        $image = 'vnetIcon.png'
+                        $image = $vnetIcon
                         $label = $peer.VNetName + "`r`n" + $peer.VNetAddressSpace
 
                         New-DiagramNode `
