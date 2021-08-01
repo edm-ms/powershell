@@ -1,6 +1,8 @@
 param (
     [Parameter(Position=1, Mandatory=$true, HelpMessage="Enter full path of CSV file to process: ")]
-    [string]$inputFile
+    [string]$inputFile,
+    [Parameter(Position=2, Mandatory=$false, HelpMessage="If switch is enabled, remove routes not defined in CSV")]
+    [switch]$removeRoute
 )
 
 $routeTables = @()
@@ -29,6 +31,15 @@ foreach ($routeTable in $uniqueRouteTables) {
         $currentRouteTable.DisableBgpRoutePropagation = $routeTable.DisableBGPPropagation 
         Set-AzRouteTable -RouteTable $currentRouteTable
     }
+
+       # // If remove route is set remove any route not defined in CSV
+       if ($removeRoute) { 
+            foreach ($activeRoute in $routeTableConfig) {
+                if ($activeRoute.Name -notin ($routeTables | Where-Object RouteTable -eq $routeTable.RouteTable).RouteName) {
+                    Remove-AzRouteConfig -RouteTable $currentRouteTable -Name $activeRoute.Name | Set-AzRouteTable
+                }
+            }
+       }
 
     # // Loop through all routes in file where route table name matches current route table
     foreach ($route in $routeTables | Where-Object RouteTable -eq $routeTable.RouteTable) {
